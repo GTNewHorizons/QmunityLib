@@ -57,8 +57,8 @@ public class GuiAnimatedStat extends BaseWidget implements IGuiAnimatedStat, IGu
     private ResourceLocation iconResLoc;
     private IWidgetListener listener;
 
-    public GuiAnimatedStat(GuiScreen gui, String title, int xPos, int yPos, int backGroundColor, IGuiAnimatedStat affectingStat,
-            boolean leftSided) {
+    public GuiAnimatedStat(GuiScreen gui, String title, int xPos, int yPos, int backGroundColor,
+            IGuiAnimatedStat affectingStat, boolean leftSided) {
 
         super(-1, xPos, yPos, yPos, backGroundColor);
 
@@ -73,7 +73,9 @@ public class GuiAnimatedStat extends BaseWidget implements IGuiAnimatedStat, IGu
         texture = "";
         this.leftSided = leftSided;
         if (gui != null) {
-            ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth,
+            ScaledResolution sr = new ScaledResolution(
+                    Minecraft.getMinecraft(),
+                    Minecraft.getMinecraft().displayWidth,
                     Minecraft.getMinecraft().displayHeight);
             if (sr.getScaledWidth() < 520) {
                 textSize = (sr.getScaledWidth() - 220) * 0.0033F;
@@ -135,7 +137,10 @@ public class GuiAnimatedStat extends BaseWidget implements IGuiAnimatedStat, IGu
 
         // scaledX = (int)(origX * textSize);
         // scaledY = (int)(origY * textSize);
-        return new Rectangle(scaledX + baseX + (leftSided ? (int) (width * textSize) : 0), scaledY + affectedY, (int) (width * textSize),
+        return new Rectangle(
+                scaledX + baseX + (leftSided ? (int) (width * textSize) : 0),
+                scaledY + affectedY,
+                (int) (width * textSize),
                 (int) (height * textSize));
     }
 
@@ -163,7 +168,8 @@ public class GuiAnimatedStat extends BaseWidget implements IGuiAnimatedStat, IGu
 
         textList.clear();
         for (String line : text) {
-            for (String s : WordUtils.wrap(I18n.format(line), (int) (MAX_CHAR / textScale)).split(System.getProperty("line.separator"))) {
+            for (String s : WordUtils.wrap(I18n.format(line), (int) (MAX_CHAR / textScale))
+                    .split(System.getProperty("line.separator"))) {
                 textList.add(s);
             }
         }
@@ -174,7 +180,8 @@ public class GuiAnimatedStat extends BaseWidget implements IGuiAnimatedStat, IGu
     public IGuiAnimatedStat setText(String text) {
 
         textList.clear();
-        for (String s : WordUtils.wrap(I18n.format(text), (int) (MAX_CHAR / textScale)).split(System.getProperty("line.separator"))) {
+        for (String s : WordUtils.wrap(I18n.format(text), (int) (MAX_CHAR / textScale))
+                .split(System.getProperty("line.separator"))) {
             textList.add(s);
         }
         return this;
@@ -222,18 +229,14 @@ public class GuiAnimatedStat extends BaseWidget implements IGuiAnimatedStat, IGu
                     height++;
                     doneExpanding = false;
                 }
-                if (width > maxWidth)
-                    width--;
-                if (height > maxHeight)
-                    height--;
+                if (width > maxWidth) width--;
+                if (height > maxHeight) height--;
             }
 
         } else {
             for (int i = 0; i < ANIMATED_STAT_SPEED; i++) {
-                if (width > minWidth)
-                    width--;
-                if (height > minHeight)
-                    height--;
+                if (width > minWidth) width--;
+                if (height > minHeight) height--;
             }
             doneExpanding = false;
         }
@@ -249,8 +252,7 @@ public class GuiAnimatedStat extends BaseWidget implements IGuiAnimatedStat, IGu
         int maxWidth = fontRenderer.getStringWidth(title);
 
         for (String line : textList) {
-            if (fontRenderer.getStringWidth(line) > maxWidth)
-                maxWidth = fontRenderer.getStringWidth(line);
+            if (fontRenderer.getStringWidth(line) > maxWidth) maxWidth = fontRenderer.getStringWidth(line);
         }
         maxWidth = (int) (maxWidth * textSize);
         maxWidth += 20;
@@ -275,9 +277,12 @@ public class GuiAnimatedStat extends BaseWidget implements IGuiAnimatedStat, IGu
         int renderWidth = (int) (oldWidth + (width - oldWidth) * partialTicks);
         int renderHeight = (int) (oldHeight + (height - oldHeight) * partialTicks);
 
-        if (leftSided)
-            renderWidth *= -1;
-        Gui.drawRect(renderBaseX, renderAffectedY /* + 1 */, renderBaseX + renderWidth /*- 1*/, renderAffectedY + renderHeight,
+        if (leftSided) renderWidth *= -1;
+        Gui.drawRect(
+                renderBaseX,
+                renderAffectedY /* + 1 */,
+                renderBaseX + renderWidth /*- 1*/,
+                renderAffectedY + renderHeight,
                 backGroundColor);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glLineWidth(3.0F);
@@ -290,23 +295,33 @@ public class GuiAnimatedStat extends BaseWidget implements IGuiAnimatedStat, IGu
         tess.addVertex(renderBaseX, renderAffectedY + renderHeight, zLevel);
         tess.draw();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
-        if (leftSided)
-            renderWidth *= -1;
+        if (leftSided) renderWidth *= -1;
         // if done expanding, draw the information
         if (doneExpanding) {
             GL11.glPushMatrix();
             GL11.glTranslated(renderBaseX + (leftSided ? -renderWidth : 16), renderAffectedY, 0);
             GL11.glScaled(textSize, textSize, textSize);
             GL11.glTranslated(-renderBaseX - (leftSided ? -renderWidth : 16), -renderAffectedY, 0);
-            fontRenderer.drawStringWithShadow(title, renderBaseX + (leftSided ? -renderWidth + 2 : 18), renderAffectedY + 2, 0xFFFF00);
+            fontRenderer.drawStringWithShadow(
+                    title,
+                    renderBaseX + (leftSided ? -renderWidth + 2 : 18),
+                    renderAffectedY + 2,
+                    0xFFFF00);
             for (int i = 0; i < textList.size(); i++) {
 
-                if (textList.get(i).contains("\u00a70") || textList.get(i).contains(EnumChatFormatting.DARK_RED.toString())) {
-                    fontRenderer.drawString(textList.get(i), renderBaseX + (leftSided ? -renderWidth + 2 : 18), renderAffectedY + i * 10
-                            + 12, 0xFFFFFF);
+                if (textList.get(i).contains("\u00a70")
+                        || textList.get(i).contains(EnumChatFormatting.DARK_RED.toString())) {
+                    fontRenderer.drawString(
+                            textList.get(i),
+                            renderBaseX + (leftSided ? -renderWidth + 2 : 18),
+                            renderAffectedY + i * 10 + 12,
+                            0xFFFFFF);
                 } else {
-                    fontRenderer.drawStringWithShadow(textList.get(i), renderBaseX + (leftSided ? -renderWidth + 2 : 18), renderAffectedY
-                            + i * 10 + 12, 0xFFFFFF);
+                    fontRenderer.drawStringWithShadow(
+                            textList.get(i),
+                            renderBaseX + (leftSided ? -renderWidth + 2 : 18),
+                            renderAffectedY + i * 10 + 12,
+                            0xFFFFFF);
                 }
             }
 
@@ -317,8 +332,7 @@ public class GuiAnimatedStat extends BaseWidget implements IGuiAnimatedStat, IGu
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             if (iStack == null) {
-                if (iconResLoc == null)
-                    iconResLoc = new ResourceLocation(texture);
+                if (iconResLoc == null) iconResLoc = new ResourceLocation(texture);
                 drawTexture(iconResLoc, renderBaseX - (leftSided ? 16 : 0), renderAffectedY);
             } else if (gui != null || !(iStack.getItem() instanceof ItemBlock)) {
                 renderItem(fontRenderer, renderBaseX - (leftSided ? 16 : 0), renderAffectedY, iStack);
@@ -328,13 +342,17 @@ public class GuiAnimatedStat extends BaseWidget implements IGuiAnimatedStat, IGu
 
     protected void renderItem(FontRenderer fontRenderer, int x, int y, ItemStack stack) {
 
-        if (itemRenderer == null)
-            itemRenderer = new RenderItem();
+        if (itemRenderer == null) itemRenderer = new RenderItem();
         GL11.glPushMatrix();
         GL11.glTranslated(0, 0, -50);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         RenderHelper.enableGUIStandardItemLighting();
-        itemRenderer.renderItemAndEffectIntoGUI(fontRenderer, FMLClientHandler.instance().getClient().renderEngine, stack, x, y);
+        itemRenderer.renderItemAndEffectIntoGUI(
+                fontRenderer,
+                FMLClientHandler.instance().getClient().renderEngine,
+                stack,
+                x,
+                y);
         itemRenderer.renderItemOverlayIntoGUI(fontRenderer, Minecraft.getMinecraft().getTextureManager(), stack, x, y);
 
         GL11.glEnable(GL11.GL_ALPHA_TEST);

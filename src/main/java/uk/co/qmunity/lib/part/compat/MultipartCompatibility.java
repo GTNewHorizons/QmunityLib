@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import uk.co.qmunity.lib.part.IMicroblock;
 import uk.co.qmunity.lib.part.IPart;
 import uk.co.qmunity.lib.part.IPartCustomPlacement;
@@ -29,34 +30,33 @@ public class MultipartCompatibility {
     public static boolean addPartToWorld(IPart part, World world, Vec3i location, boolean simulated) {
 
         for (MultipartSystem s : MultipartSystem.getAvailableSystems())
-            if (world.isAirBlock(location.getX(), location.getY(), location.getZ()) || s.getCompat().isMultipart(world, location)
+            if (world.isAirBlock(location.getX(), location.getY(), location.getZ())
+                    || s.getCompat().isMultipart(world, location)
                     || s.getCompat().canBeMultipart(world, location))
-                if (s.getCompat().addPartToWorld(part, world, location, simulated))
-                    return true;
+                if (s.getCompat().addPartToWorld(part, world, location, simulated)) return true;
         return false;
     }
 
     public static boolean addPartToWorldBruteforce(IPart part, World world, Vec3i location) {
 
         for (MultipartSystem s : MultipartSystem.getAvailableSystems())
-            if (world.isAirBlock(location.getX(), location.getY(), location.getZ()) || s.getCompat().isMultipart(world, location)
+            if (world.isAirBlock(location.getX(), location.getY(), location.getZ())
+                    || s.getCompat().isMultipart(world, location)
                     || s.getCompat().canBeMultipart(world, location))
-                if (s.getCompat().addPartToWorldBruteforce(part, world, location))
-                    return true;
+                if (s.getCompat().addPartToWorldBruteforce(part, world, location)) return true;
         return false;
     }
 
-    public static boolean placePartInWorld(IPart part, World world, Vec3i location, ForgeDirection clickedFace, EntityPlayer player,
-            ItemStack item) {
+    public static boolean placePartInWorld(IPart part, World world, Vec3i location, ForgeDirection clickedFace,
+            EntityPlayer player, ItemStack item) {
 
         return placePartInWorld(part, world, location, clickedFace, player, item, false);
     }
 
-    public static boolean placePartInWorld(IPart part, World world, Vec3i location, ForgeDirection clickedFace, EntityPlayer player,
-            ItemStack item, boolean simulated) {
+    public static boolean placePartInWorld(IPart part, World world, Vec3i location, ForgeDirection clickedFace,
+            EntityPlayer player, ItemStack item, boolean simulated) {
 
-        if (simulated)
-            PartUpdateManager.setUpdatesEnabled(false);
+        if (simulated) PartUpdateManager.setUpdatesEnabled(false);
 
         Map<IMultipartCompat, Integer> passes = new LinkedHashMap<IMultipartCompat, Integer>();
         int totalPasses = 0;
@@ -69,34 +69,28 @@ public class MultipartCompatibility {
 
         for (int pass = 0; pass < totalPasses; pass++) {
             for (IMultipartCompat c : passes.keySet()) {
-                if (pass >= passes.get(c))
-                    continue;
+                if (pass >= passes.get(c)) continue;
 
                 if (c.placePartInWorld(part, world, location.clone(), clickedFace, player, item, pass, simulated)) {
-                    if (!player.capabilities.isCreativeMode && !simulated)
-                        item.stackSize--;
+                    if (!player.capabilities.isCreativeMode && !simulated) item.stackSize--;
 
-                    if (simulated)
-                        PartUpdateManager.setUpdatesEnabled(true);
+                    if (simulated) PartUpdateManager.setUpdatesEnabled(true);
                     return true;
                 }
             }
         }
 
-        if (simulated)
-            PartUpdateManager.setUpdatesEnabled(true);
+        if (simulated) PartUpdateManager.setUpdatesEnabled(true);
 
         return false;
     }
 
     public static ITilePartHolder getPartHolder(World world, Vec3i location) {
 
-        if (world == null)
-            return null;
+        if (world == null) return null;
 
         for (MultipartSystem s : MultipartSystem.getAvailableSystems())
-            if (s.getCompat().isMultipart(world, location))
-                return s.getCompat().getPartHolder(world, location);
+            if (s.getCompat().isMultipart(world, location)) return s.getCompat().getPartHolder(world, location);
 
         return null;
     }
@@ -117,10 +111,7 @@ public class MultipartCompatibility {
 
         for (MultipartSystem s : MultipartSystem.getAvailableSystems()) {
             List<IMicroblock> ls = s.getCompat().getMicroblocks(world, location);
-            if (ls != null)
-                for (IMicroblock m : ls)
-                    if (!l.contains(m))
-                        l.add(m);
+            if (ls != null) for (IMicroblock m : ls) if (!l.contains(m)) l.add(m);
         }
 
         return l;
@@ -129,12 +120,9 @@ public class MultipartCompatibility {
     public static IPart getPart(World world, Vec3i location, String type) {
 
         ITilePartHolder h = getPartHolder(world, location);
-        if (h == null)
-            return null;
+        if (h == null) return null;
 
-        for (IPart p : h.getParts())
-            if (p.getType() == type)
-                return p;
+        for (IPart p : h.getParts()) if (p.getType() == type) return p;
 
         return null;
     }
@@ -148,12 +136,9 @@ public class MultipartCompatibility {
     public static <T> T getPart(World world, Vec3i location, Class<T> type) {
 
         ITilePartHolder h = getPartHolder(world, location);
-        if (h == null)
-            return null;
+        if (h == null) return null;
 
-        for (IPart p : h.getParts())
-            if (type.isAssignableFrom(p.getClass()))
-                return (T) p;
+        for (IPart p : h.getParts()) if (type.isAssignableFrom(p.getClass())) return (T) p;
 
         return null;
     }
@@ -182,11 +167,9 @@ public class MultipartCompatibility {
 
         IPartPlacement placement = null;
 
-        if (!(part instanceof IPartCustomPlacement))
-            return new PartPlacementDefault();
+        if (!(part instanceof IPartCustomPlacement)) return new PartPlacementDefault();
         placement = ((IPartCustomPlacement) part).getPlacement(part, world, location, face, mop, player);
-        if (placement != null)
-            return placement;
+        if (placement != null) return placement;
 
         return null;
     }

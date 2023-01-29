@@ -6,6 +6,7 @@ import java.util.Map;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+
 import uk.co.qmunity.lib.raytrace.QMovingObjectPosition;
 import uk.co.qmunity.lib.vec.IWorldLocation;
 import uk.co.qmunity.lib.vec.Vec3d;
@@ -78,13 +79,15 @@ public interface ITilePartHolder extends IWorldLocation {
     public Map<String, IPart> getPartMap();
 
     /**
-     * Gets a list of microblocks in this holder. They should also be included in getParts() and getPartMap() if they're part of this part holder. In
-     * the case of FMP, where the microblocks are parts outside this holder, it's not needed.
+     * Gets a list of microblocks in this holder. They should also be included in getParts() and getPartMap() if they're
+     * part of this part holder. In the case of FMP, where the microblocks are parts outside this holder, it's not
+     * needed.
      */
     public List<IMicroblock> getMicroblocks();
 
     /**
-     * Gets whether or not this tile is simulated (not in world). Used for part placement and displaying a ghost image of the part before placing it.
+     * Gets whether or not this tile is simulated (not in world). Used for part placement and displaying a ghost image
+     * of the part before placing it.
      */
     public boolean isSimulated();
 

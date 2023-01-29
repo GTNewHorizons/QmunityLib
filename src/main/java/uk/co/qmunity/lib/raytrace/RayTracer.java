@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import uk.co.qmunity.lib.part.IPart;
 import uk.co.qmunity.lib.part.IPartSelectable;
 import uk.co.qmunity.lib.util.QLog;
@@ -33,10 +34,12 @@ public class RayTracer {
     public QMovingObjectPosition rayTraceCubes(IPartSelectable part, Vec3d start, Vec3d end) {
 
         try {
-            QMovingObjectPosition mop = rayTraceCubes(part.getSelectionBoxes(), start, end,
+            QMovingObjectPosition mop = rayTraceCubes(
+                    part.getSelectionBoxes(),
+                    start,
+                    end,
                     new Vec3i(((IPart) part).getX(), ((IPart) part).getY(), ((IPart) part).getZ()));
-            if (mop == null)
-                return null;
+            if (mop == null) return null;
 
             return new QMovingObjectPosition(mop, part, mop.getCube());
         } catch (Exception ex) {
@@ -47,15 +50,13 @@ public class RayTracer {
 
     public QMovingObjectPosition rayTraceCubes(List<Vec3dCube> cubes, Vec3d start, Vec3d end, Vec3i blockPos) {
 
-        if (cubes == null)
-            return null;
+        if (cubes == null) return null;
 
         Vec3d start_ = start.clone().sub(blockPos.getX(), blockPos.getY(), blockPos.getZ());
         Vec3d end_ = end.clone().sub(blockPos.getX(), blockPos.getY(), blockPos.getZ());
 
         QMovingObjectPosition mop = rayTraceCubes(cubes, start_, end_);
-        if (mop == null)
-            return null;
+        if (mop == null) return null;
 
         mop.blockX += blockPos.getX();
         mop.blockY += blockPos.getY();
@@ -72,8 +73,7 @@ public class RayTracer {
 
         for (Vec3dCube c : cubes) {
             QMovingObjectPosition mop = rayTraceCube(c, start, end);
-            if (mop == null)
-                continue;
+            if (mop == null) continue;
             double d = mop.distanceTo(start);
             if (d < dist) {
                 dist = d;
@@ -92,8 +92,7 @@ public class RayTracer {
 
         for (ForgeDirection face : ForgeDirection.VALID_DIRECTIONS) {
             Vec3d v = rayTraceFace(cube, face, start, end);
-            if (v == null)
-                continue;
+            if (v == null) continue;
             double d = v.distanceTo(start);
             if (d < dist) {
                 dist = d;
@@ -102,8 +101,7 @@ public class RayTracer {
             }
         }
 
-        if (closest == null)
-            return null;
+        if (closest == null) return null;
 
         return new QMovingObjectPosition(new MovingObjectPosition(0, 0, 0, f.ordinal(), closest.toVec3()), cube);
     }
@@ -114,8 +112,7 @@ public class RayTracer {
         Vec3d normal = getNormal(face);
         Vec3d point = getPoint(cube, face).clone();
 
-        if (normal.dot(director) == 0)
-            return null;
+        if (normal.dot(director) == 0) return null;
 
         double t = (point.dot(normal) - start.dot(normal)) / director.dot(normal);
         double x = start.getX() + (t * director.getX());
@@ -156,26 +153,26 @@ public class RayTracer {
         Vec3d max = cube.getMax().clone();
 
         switch (face) {
-        case DOWN:
-            max.setY(min.getY());
-            break;
-        case UP:
-            min.setY(max.getY());
-            break;
-        case WEST:
-            max.setX(min.getX());
-            break;
-        case EAST:
-            min.setX(max.getX());
-            break;
-        case NORTH:
-            max.setZ(min.getZ());
-            break;
-        case SOUTH:
-            min.setZ(max.getZ());
-            break;
-        default:
-            break;
+            case DOWN:
+                max.setY(min.getY());
+                break;
+            case UP:
+                min.setY(max.getY());
+                break;
+            case WEST:
+                max.setX(min.getX());
+                break;
+            case EAST:
+                min.setX(max.getX());
+                break;
+            case NORTH:
+                max.setZ(min.getZ());
+                break;
+            case SOUTH:
+                min.setZ(max.getZ());
+                break;
+            default:
+                break;
         }
 
         return new Vec3dCube(min, max);
@@ -201,8 +198,7 @@ public class RayTracer {
 
     public static double getBlockReachDistance(EntityPlayer player) {
 
-        if (overrideReachDistance > 0)
-            return overrideReachDistance;
+        if (overrideReachDistance > 0) return overrideReachDistance;
 
         return player.worldObj.isRemote ? getBlockReachDistance_client()
                 : player instanceof EntityPlayerMP ? getBlockReachDistance_server((EntityPlayerMP) player) : 5D;
@@ -212,11 +208,11 @@ public class RayTracer {
 
         Vec3d v = new Vec3d(player.posX, player.posY, player.posZ);
         if (player.worldObj.isRemote) {
-            v.add(0, player.getEyeHeight() - player.getDefaultEyeHeight(), 0);// compatibility with eye height changing mods
+            v.add(0, player.getEyeHeight() - player.getDefaultEyeHeight(), 0);// compatibility with eye height changing
+                                                                              // mods
         } else {
             v.add(0, player.getEyeHeight(), 0);
-            if (player instanceof EntityPlayerMP && player.isSneaking())
-                v.sub(0, 0.08, 0);
+            if (player instanceof EntityPlayerMP && player.isSneaking()) v.sub(0, 0.08, 0);
         }
         return v.toVec3();
     }

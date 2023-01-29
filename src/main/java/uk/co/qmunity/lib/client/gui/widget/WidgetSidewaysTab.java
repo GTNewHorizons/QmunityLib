@@ -14,7 +14,8 @@ public class WidgetSidewaysTab extends BaseWidget {
     private final int tabAmount;
     public final boolean[] enabledTabs;
 
-    public WidgetSidewaysTab(int id, int x, int y, int width, int height, int textureU, int tabAmount, String textureLoc) {
+    public WidgetSidewaysTab(int id, int x, int y, int width, int height, int textureU, int tabAmount,
+            String textureLoc) {
 
         super(id, x, y, width * tabAmount, height, textureU, 0, textureLoc);
         singleTabWidth = width;
@@ -36,8 +37,7 @@ public class WidgetSidewaysTab extends BaseWidget {
     @Override
     public void render(int mouseX, int mouseY, float partialTick) {
 
-        if (textures.length > 0)
-            Minecraft.getMinecraft().getTextureManager().bindTexture(textures[0]);
+        if (textures.length > 0) Minecraft.getMinecraft().getTextureManager().bindTexture(textures[0]);
 
         for (int i = 0; i < tabAmount; i++) {
             if (i == value) {
@@ -49,7 +49,14 @@ public class WidgetSidewaysTab extends BaseWidget {
                     GL11.glColor4d(0.2, 0.2, 0.2, 1);
                 }
             }
-            Gui.func_146110_a(x + singleTabWidth * i, y, getTextureU(), getTextureV() + singleTabWidth * i, singleTabWidth, height, 256,
+            Gui.func_146110_a(
+                    x + singleTabWidth * i,
+                    y,
+                    getTextureU(),
+                    getTextureV() + singleTabWidth * i,
+                    singleTabWidth,
+                    height,
+                    256,
                     256);
         }
     }

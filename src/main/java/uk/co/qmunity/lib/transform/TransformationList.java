@@ -172,8 +172,7 @@ public class TransformationList implements List<Transformation>, Transformation 
 
         List<Transformation> list = new ArrayList<Transformation>(l);
         Collections.reverse(list);
-        for (Transformation t : list)
-            point = t.apply(point);
+        for (Transformation t : list) point = t.apply(point);
 
         return point;
     }
@@ -185,8 +184,7 @@ public class TransformationList implements List<Transformation>, Transformation 
 
         List<Transformation> list = new ArrayList<Transformation>(l);
         Collections.reverse(list);
-        for (Transformation t : list)
-            cube = t.apply(cube);
+        for (Transformation t : list) cube = t.apply(cube);
 
         return cube;
     }

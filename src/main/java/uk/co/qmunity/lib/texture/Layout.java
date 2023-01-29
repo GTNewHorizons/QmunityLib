@@ -62,8 +62,7 @@ public class Layout {
         }
 
         try {
-            if (config == null)
-                config = new LayoutConfiguration(layout);
+            if (config == null) config = new LayoutConfiguration(layout);
         } catch (Exception e) {
             layout = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
         }
@@ -74,15 +73,16 @@ public class Layout {
 
     public BufferedImage getLayout(int color) {
 
-        if (parent == null)
-            return getSubLayout(0).getLayout(color);
+        if (parent == null) return getSubLayout(0).getLayout(color);
 
         for (Entry<Integer, BufferedImage> e : colorMaps.entrySet())
-            if (e.getKey().intValue() == color)
-                return e.getValue();
+            if (e.getKey().intValue() == color) return e.getValue();
 
         // Create a new image and get its graphics instance so we can draw on it
-        BufferedImage img = new BufferedImage(getConfig().getWidth(), getConfig().getHeight(), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage img = new BufferedImage(
+                getConfig().getWidth(),
+                getConfig().getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = img.createGraphics();
 
         // Fill BG
@@ -91,10 +91,8 @@ public class Layout {
 
         // Copy over the pixels that match the color we want
         g.setColor(new Color(0xFFFFFF));
-        for (int x = 0; x < img.getWidth(); x++)
-            for (int y = 0; y < img.getWidth(); y++)
-                if ((layout.getRGB(x, y) & 0xFFFFFF) == color)
-                    g.fillRect(x, y, 1, 1);
+        for (int x = 0; x < img.getWidth(); x++) for (int y = 0; y < img.getWidth(); y++)
+            if ((layout.getRGB(x, y) & 0xFFFFFF) == color) g.fillRect(x, y, 1, 1);
 
         // Dispose the graphics instance, we don't need it anymore
         g.dispose();
@@ -107,12 +105,10 @@ public class Layout {
 
     public SimplifiedLayout getSimplifiedLayout(int color) {
 
-        if (parent == null)
-            return getSubLayout(0).getSimplifiedLayout(color);
+        if (parent == null) return getSubLayout(0).getSimplifiedLayout(color);
 
         for (Entry<Integer, SimplifiedLayout> e : simplificationMaps.entrySet())
-            if (e.getKey().intValue() == color)
-                return e.getValue();
+            if (e.getKey().intValue() == color) return e.getValue();
 
         SimplifiedLayout l = new SimplifiedLayout(this, color);
         simplificationMaps.put(color, l);
@@ -121,20 +117,16 @@ public class Layout {
 
     public LayoutConfiguration getConfig() {
 
-        if (parent != null)
-            return parent.getConfig();
+        if (parent != null) return parent.getConfig();
 
         return config;
     }
 
     public Layout getSubLayout(int id) {
 
-        if (parent != null)
-            return parent.getSubLayout(id);
+        if (parent != null) return parent.getSubLayout(id);
 
-        for (Entry<Integer, Layout> e : subLayouts.entrySet())
-            if (e.getKey().intValue() == id)
-                return e.getValue();
+        for (Entry<Integer, Layout> e : subLayouts.entrySet()) if (e.getKey().intValue() == id) return e.getValue();
 
         BufferedImage img = getConfig().getSubLayout(layout, id);
         Layout layout = new Layout(img, this);

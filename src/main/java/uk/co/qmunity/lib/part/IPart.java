@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
 import uk.co.qmunity.lib.client.render.RenderHelper;
 import uk.co.qmunity.lib.raytrace.QMovingObjectPosition;
 import uk.co.qmunity.lib.vec.IWorldLocation;
@@ -19,8 +20,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 /**
- * Implement this interface on any multipart you want to make. It's recommended to extend {@link PartBase} right away, as it already handles most
- * things but you can implement this interface if you need.
+ * Implement this interface on any multipart you want to make. It's recommended to extend {@link PartBase} right away,
+ * as it already handles most things but you can implement this interface if you need.
  *
  * @author amadornes
  */
@@ -100,7 +101,8 @@ public interface IPart extends IWorldLocation {
      * Renders the breaking animation of this part at the specified position.
      */
     @SideOnly(Side.CLIENT)
-    public boolean renderBreaking(Vec3i translation, RenderHelper renderer, RenderBlocks renderBlocks, int pass, QMovingObjectPosition mop);
+    public boolean renderBreaking(Vec3i translation, RenderHelper renderer, RenderBlocks renderBlocks, int pass,
+            QMovingObjectPosition mop);
 
     /**
      * Renders this part statically. A tessellator has alredy started drawing. <br>
@@ -128,7 +130,8 @@ public interface IPart extends IWorldLocation {
     public Vec3dCube getRenderBounds();
 
     /**
-     * Checks if the part passed as an argument occludes in any way this part. Return false if it does, true if it doesn't.
+     * Checks if the part passed as an argument occludes in any way this part. Return false if it does, true if it
+     * doesn't.
      */
     public boolean occlusionTest(IPart part);
 

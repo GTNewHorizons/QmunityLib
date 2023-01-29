@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
 import uk.co.qmunity.lib.part.IMicroblock;
 import uk.co.qmunity.lib.part.MicroblockShape;
 import uk.co.qmunity.lib.part.PartBase;
@@ -30,14 +31,10 @@ public class FMPMicroblock extends PartBase implements IMicroblock {
     @Override
     public MicroblockShape getShape() {
 
-        if (microblock instanceof HollowMicroblock)
-            return MicroblockShape.FACE_HOLLOW;
-        if (microblock instanceof FaceMicroblock)
-            return MicroblockShape.FACE;
-        if (microblock instanceof CornerMicroblock)
-            return MicroblockShape.CORNER;
-        if (microblock instanceof EdgeMicroblock)
-            return MicroblockShape.EDGE;
+        if (microblock instanceof HollowMicroblock) return MicroblockShape.FACE_HOLLOW;
+        if (microblock instanceof FaceMicroblock) return MicroblockShape.FACE;
+        if (microblock instanceof CornerMicroblock) return MicroblockShape.CORNER;
+        if (microblock instanceof EdgeMicroblock) return MicroblockShape.EDGE;
 
         return null;
     }
@@ -104,8 +101,7 @@ public class FMPMicroblock extends PartBase implements IMicroblock {
 
         List<Vec3dCube> boxes = new ArrayList<Vec3dCube>();
 
-        for (Cuboid6 c : microblock.getSubParts())
-            boxes.add(new Vec3dCube(c.toAABB()));
+        for (Cuboid6 c : microblock.getSubParts()) boxes.add(new Vec3dCube(c.toAABB()));
 
         return boxes;
     }

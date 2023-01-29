@@ -3,6 +3,7 @@ package uk.co.qmunity.lib.client.renderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+
 import uk.co.qmunity.lib.effect.EntityFXParticle;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

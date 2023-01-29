@@ -51,7 +51,8 @@ public class RenderMultipart extends TileEntitySpecialRenderer implements ISimpl
     }
 
     @Override
-    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
+            RenderBlocks renderer) {
 
         renderer.setRenderBounds(0, 0, 0, 0, 0, 0);
         renderer.renderStandardBlock(Blocks.stone, x, y, z);
@@ -64,7 +65,10 @@ public class RenderMultipart extends TileEntitySpecialRenderer implements ISimpl
 
         if (renderer.overrideBlockTexture != null) {
             MovingObjectPosition mop = Minecraft.getMinecraft().objectMouseOver;
-            if (mop != null && mop.blockX == x && mop.blockY == y && mop.blockZ == z && mop instanceof QMovingObjectPosition
+            if (mop != null && mop.blockX == x
+                    && mop.blockY == y
+                    && mop.blockZ == z
+                    && mop instanceof QMovingObjectPosition
                     && ((QMovingObjectPosition) mop).getPart() != null) {
                 renderBreaking(world, x, y, z, renderer, ((QMovingObjectPosition) mop));
                 rendered = true;
@@ -77,8 +81,7 @@ public class RenderMultipart extends TileEntitySpecialRenderer implements ISimpl
             for (IPart p : te.getParts()) {
                 if (p.getParent() != null) {
                     if (p.shouldRenderOnPass(pass)) {
-                        if (p.renderStatic(new Vec3i(x, y, z), RenderHelper.instance, renderer, pass))
-                            rendered = true;
+                        if (p.renderStatic(new Vec3i(x, y, z), RenderHelper.instance, renderer, pass)) rendered = true;
                         RenderHelper.instance.resetRenderedSides();
                         RenderHelper.instance.resetTextureRotations();
                         RenderHelper.instance.resetTransformations();
@@ -93,7 +96,8 @@ public class RenderMultipart extends TileEntitySpecialRenderer implements ISimpl
         return rendered;
     }
 
-    public static void renderBreaking(IBlockAccess world, int x, int y, int z, RenderBlocks renderer, QMovingObjectPosition mop) {
+    public static void renderBreaking(IBlockAccess world, int x, int y, int z, RenderBlocks renderer,
+            QMovingObjectPosition mop) {
 
         RenderHelper.instance.setOverrideTexture(renderer.overrideBlockTexture);
         mop.getPart().renderBreaking(new Vec3i(x, y, z), RenderHelper.instance, renderer, pass, mop);

@@ -39,16 +39,12 @@ public class Pair<K, V> implements Entry<K, V> {
     @Override
     public boolean equals(Object obj) {
 
-        if (obj == null)
-            return false;
-        if (!(obj instanceof Pair<?, ?>))
-            return false;
+        if (obj == null) return false;
+        if (!(obj instanceof Pair<?, ?>)) return false;
         Pair<?, ?> p = (Pair<?, ?>) obj;
 
-        if ((getKey() == null) != (p.getKey() == null))
-            return false;
-        if ((getValue() == null) != (p.getValue() == null))
-            return false;
+        if ((getKey() == null) != (p.getKey() == null)) return false;
+        if ((getValue() == null) != (p.getValue() == null)) return false;
 
         return getKey().equals(p.getKey()) && getValue().equals(p.getValue());
     }

@@ -5,6 +5,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 import net.minecraft.entity.player.EntityPlayer;
+
 import uk.co.qmunity.lib.part.IPart;
 import uk.co.qmunity.lib.part.ITilePartHolder;
 
@@ -23,8 +24,7 @@ public class PacketCRemovePart extends PacketCPart {
     @Override
     public void handle(EntityPlayer player) {
 
-        if (holder != null)
-            holder.removePart(holder.getPartMap().get(partId));
+        if (holder != null) holder.removePart(holder.getPartMap().get(partId));
     }
 
     @Override

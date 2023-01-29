@@ -3,6 +3,7 @@ package uk.co.qmunity.lib.part;
 import java.util.List;
 
 import net.minecraft.entity.Entity;
+
 import uk.co.qmunity.lib.vec.Vec3dCube;
 
 /**
@@ -13,7 +14,8 @@ import uk.co.qmunity.lib.vec.Vec3dCube;
 public interface IPartCollidable extends IPart {
 
     /**
-     * Adds all of this part's collision boxes to the list. These boxes can depend on the entity that's colliding with them.
+     * Adds all of this part's collision boxes to the list. These boxes can depend on the entity that's colliding with
+     * them.
      */
     public void addCollisionBoxesToList(List<Vec3dCube> boxes, Entity entity);
 

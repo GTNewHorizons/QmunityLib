@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+
 import uk.co.qmunity.lib.network.NetworkHandler;
 import uk.co.qmunity.lib.part.IPart;
 import uk.co.qmunity.lib.part.ITilePartHolder;
@@ -33,8 +34,7 @@ public class PacketCUpdatePart extends PacketCPart {
     @Override
     public void handle(EntityPlayer player) {
 
-        if (part == null)
-            return;
+        if (part == null) return;
 
         try {
             part.readUpdateData(new DataInputStream(new ByteArrayInputStream(data)), channel);

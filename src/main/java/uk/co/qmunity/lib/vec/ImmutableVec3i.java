@@ -114,12 +114,9 @@ public class ImmutableVec3i extends Vec3i {
         if (hasWorld()) {
             Block bl = this.b;
 
-            if (b == null && bl == Blocks.air)
-                return true;
-            if (b == null && checkAir && bl.getMaterial() == Material.air)
-                return true;
-            if (b == null && checkAir && bl.isAir(w, getX(), getY(), getZ()))
-                return true;
+            if (b == null && bl == Blocks.air) return true;
+            if (b == null && checkAir && bl.getMaterial() == Material.air) return true;
+            if (b == null && checkAir && bl.isAir(w, getX(), getY(), getZ())) return true;
 
             return bl.getClass().isInstance(b);
         }

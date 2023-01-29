@@ -16,8 +16,7 @@ public class FMPHelper {
 
     public static final IMultipartCompat getCompat() {
 
-        if (isLoaded())
-            initCompat();
+        if (isLoaded()) initCompat();
 
         return compat;
     }
@@ -25,8 +24,7 @@ public class FMPHelper {
     @Optional.Method(modid = Dependencies.FMP)
     private static void initCompat() {
 
-        if (compat == null)
-            compat = new FMPCompat();
+        if (compat == null) compat = new FMPCompat();
     }
 
 }

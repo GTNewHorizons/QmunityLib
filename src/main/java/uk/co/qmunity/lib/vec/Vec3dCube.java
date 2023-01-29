@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import uk.co.qmunity.lib.misc.Pair;
 import uk.co.qmunity.lib.part.IPart;
 import uk.co.qmunity.lib.transform.Transformation;
@@ -36,8 +37,7 @@ public class Vec3dCube {
     public Vec3dCube(Vec3d a, Vec3d b) {
 
         World w = a.getWorld();
-        if (w == null)
-            w = b.getWorld();
+        if (w == null) w = b.getWorld();
 
         min = a;
         max = b;
@@ -68,7 +68,11 @@ public class Vec3dCube {
 
     public Vec3d getCenter() {
 
-        return new Vec3d((getMinX() + getMaxX()) / 2D, (getMinY() + getMaxY()) / 2D, (getMinZ() + getMaxZ()) / 2D, getMin().getWorld());
+        return new Vec3d(
+                (getMinX() + getMaxX()) / 2D,
+                (getMinY() + getMaxY()) / 2D,
+                (getMinZ() + getMaxZ()) / 2D,
+                getMin().getWorld());
     }
 
     public double getMinX() {
@@ -172,20 +176,20 @@ public class Vec3dCube {
     public Vec3dCube rotate(ForgeDirection face, Vec3d center) {
 
         switch (face) {
-        case DOWN:
-            return this;
-        case UP:
-            return rotate(0, 0, 2 * 90, center);
-        case WEST:
-            return rotate(0, 0, -1 * 90, center);
-        case EAST:
-            return rotate(0, 0, 1 * 90, center);
-        case NORTH:
-            return rotate(1 * 90, 0, 0, center);
-        case SOUTH:
-            return rotate(-1 * 90, 0, 0, center);
-        default:
-            break;
+            case DOWN:
+                return this;
+            case UP:
+                return rotate(0, 0, 2 * 90, center);
+            case WEST:
+                return rotate(0, 0, -1 * 90, center);
+            case EAST:
+                return rotate(0, 0, 1 * 90, center);
+            case NORTH:
+                return rotate(1 * 90, 0, 0, center);
+            case SOUTH:
+                return rotate(-1 * 90, 0, 0, center);
+            default:
+                break;
         }
 
         return this;
@@ -217,8 +221,7 @@ public class Vec3dCube {
             maxz = Math.max(maxz, c.getMaxZ());
         }
 
-        if (cubes.size() == 0)
-            return new Vec3dCube(0, 0, 0, 0, 0, 0);
+        if (cubes.size() == 0) return new Vec3dCube(0, 0, 0, 0, 0, 0);
 
         return new Vec3dCube(minx, miny, minz, maxx, maxy, maxz);
     }
@@ -226,8 +229,7 @@ public class Vec3dCube {
     @Override
     public boolean equals(Object o) {
 
-        if (!(o instanceof Vec3dCube))
-            return false;
+        if (!(o instanceof Vec3dCube)) return false;
         Vec3dCube other = (Vec3dCube) o;
         return other.min.equals(min) && other.max.equals(max) && other.part == part;
     }
@@ -241,17 +243,17 @@ public class Vec3dCube {
     public Vec2dRect getFace(ForgeDirection face) {
 
         switch (face) {
-        case DOWN:
-        case UP:
-            return new Vec2dRect(getMinX(), getMinZ(), getMaxX(), getMaxZ());
-        case WEST:
-        case EAST:
-            return new Vec2dRect(getMinY(), getMinZ(), getMaxY(), getMaxZ());
-        case NORTH:
-        case SOUTH:
-            return new Vec2dRect(getMinX(), getMinY(), getMaxX(), getMaxY());
-        default:
-            break;
+            case DOWN:
+            case UP:
+                return new Vec2dRect(getMinX(), getMinZ(), getMaxX(), getMaxZ());
+            case WEST:
+            case EAST:
+                return new Vec2dRect(getMinY(), getMinZ(), getMaxY(), getMaxZ());
+            case NORTH:
+            case SOUTH:
+                return new Vec2dRect(getMinX(), getMinY(), getMaxX(), getMaxY());
+            default:
+                break;
         }
 
         return null;
@@ -313,7 +315,10 @@ public class Vec3dCube {
 
                     cube.fix();
 
-                    cubes.add(new Pair<Pair<Vec3dCube, Translation>, boolean[]>(new Pair<Vec3dCube, Translation>(cube, t), sides));
+                    cubes.add(
+                            new Pair<Pair<Vec3dCube, Translation>, boolean[]>(
+                                    new Pair<Vec3dCube, Translation>(cube, t),
+                                    sides));
                 }
             }
         }

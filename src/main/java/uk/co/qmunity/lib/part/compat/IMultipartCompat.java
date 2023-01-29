@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import uk.co.qmunity.lib.part.IMicroblock;
 import uk.co.qmunity.lib.part.IPart;
 import uk.co.qmunity.lib.part.ITilePartHolder;
@@ -21,8 +22,8 @@ public interface IMultipartCompat {
 
     public boolean addPartToWorldBruteforce(IPart part, World world, Vec3i location);
 
-    public boolean placePartInWorld(IPart part, World world, Vec3i location, ForgeDirection clickedFace, EntityPlayer player,
-            ItemStack item, int pass, boolean simulated);
+    public boolean placePartInWorld(IPart part, World world, Vec3i location, ForgeDirection clickedFace,
+            EntityPlayer player, ItemStack item, int pass, boolean simulated);
 
     public int getPlacementPasses();
 

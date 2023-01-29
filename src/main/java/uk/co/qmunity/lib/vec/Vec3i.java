@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright 2014 amadornes
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a
- * copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations
- * under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  ******************************************************************************/
 package uk.co.qmunity.lib.vec;
 
@@ -23,10 +23,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import uk.co.qmunity.lib.helper.BlockPos;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import uk.co.qmunity.lib.helper.BlockPos;
 
 public class Vec3i implements IWorldLocation {
 
@@ -168,7 +169,10 @@ public class Vec3i implements IWorldLocation {
 
     public Vec3i cross(Vec3i v) {
 
-        return new Vec3i(getY() * v.getZ() - getZ() * v.getY(), getZ() * v.getZ() - getX() * v.getX(), getX() * v.getY() - getY() * v.getX());
+        return new Vec3i(
+                getY() * v.getZ() - getZ() * v.getY(),
+                getZ() * v.getZ() - getX() * v.getX(),
+                getX() * v.getY() - getY() * v.getX());
     }
 
     public Vec3i getRelative(int x, int y, int z) {
@@ -184,7 +188,8 @@ public class Vec3i implements IWorldLocation {
     public ForgeDirection getDirectionTo(Vec3i vec) {
 
         for (ForgeDirection d : ForgeDirection.VALID_DIRECTIONS)
-            if (getX() + d.offsetX == vec.getX() && getY() + d.offsetY == vec.getY() && getZ() + d.offsetZ == vec.getZ())
+            if (getX() + d.offsetX == vec.getX() && getY() + d.offsetY == vec.getY()
+                    && getZ() + d.offsetZ == vec.getZ())
                 return d;
         return ForgeDirection.UNKNOWN;
     }
@@ -221,12 +226,9 @@ public class Vec3i implements IWorldLocation {
         if (hasWorld()) {
             Block bl = w.getBlock(getX(), getY(), getZ());
 
-            if (b == null && bl == Blocks.air)
-                return true;
-            if (b == null && checkAir && bl.getMaterial() == Material.air)
-                return true;
-            if (b == null && checkAir && bl.isAir(w, getX(), getY(), getZ()))
-                return true;
+            if (b == null && bl == Blocks.air) return true;
+            if (b == null && checkAir && bl.getMaterial() == Material.air) return true;
+            if (b == null && checkAir && bl.isAir(w, getX(), getY(), getZ())) return true;
 
             return bl.getClass().isInstance(b);
         }
@@ -249,8 +251,7 @@ public class Vec3i implements IWorldLocation {
     public Block getBlock(boolean airIsNull) {
 
         if (hasWorld()) {
-            if (airIsNull && isBlock(null, true))
-                return null;
+            if (airIsNull && isBlock(null, true)) return null;
             return w.getBlock(getX(), getY(), getZ());
 
         }
@@ -335,28 +336,21 @@ public class Vec3i implements IWorldLocation {
     public String toString() {
 
         String s = "Vector3{";
-        if (hasWorld())
-            s += "w=" + w.provider.dimensionId + ";";
+        if (hasWorld()) s += "w=" + w.provider.dimensionId + ";";
         s += "x=" + getX() + ";y=" + getY() + ";z=" + getZ() + "}";
         return s;
     }
 
     public ForgeDirection toForgeDirection() {
 
-        if (getZ() >= getX() && getZ() >= getY())
-            return ForgeDirection.SOUTH;
-        if (getZ() <= getX() && getZ() <= getY())
-            return ForgeDirection.NORTH;
+        if (getZ() >= getX() && getZ() >= getY()) return ForgeDirection.SOUTH;
+        if (getZ() <= getX() && getZ() <= getY()) return ForgeDirection.NORTH;
 
-        if (getX() >= getY() && getX() >= getZ())
-            return ForgeDirection.EAST;
-        if (getX() <= getY() && getX() <= getZ())
-            return ForgeDirection.WEST;
+        if (getX() >= getY() && getX() >= getZ()) return ForgeDirection.EAST;
+        if (getX() <= getY() && getX() <= getZ()) return ForgeDirection.WEST;
 
-        if (getY() >= getX() && getY() >= getZ())
-            return ForgeDirection.UP;
-        if (getY() <= getX() && getY() <= getZ())
-            return ForgeDirection.DOWN;
+        if (getY() >= getX() && getY() >= getZ()) return ForgeDirection.UP;
+        if (getY() <= getX() && getY() <= getZ()) return ForgeDirection.DOWN;
 
         return ForgeDirection.UNKNOWN;
     }
@@ -385,12 +379,9 @@ public class Vec3i implements IWorldLocation {
                     }
                 }
 
-                if (t.toLowerCase().startsWith("x"))
-                    x = Integer.parseInt(t.split("=")[1]);
-                if (t.toLowerCase().startsWith("y"))
-                    y = Integer.parseInt(t.split("=")[1]);
-                if (t.toLowerCase().startsWith("z"))
-                    z = Integer.parseInt(t.split("=")[1]);
+                if (t.toLowerCase().startsWith("x")) x = Integer.parseInt(t.split("=")[1]);
+                if (t.toLowerCase().startsWith("y")) y = Integer.parseInt(t.split("=")[1]);
+                if (t.toLowerCase().startsWith("z")) z = Integer.parseInt(t.split("=")[1]);
             }
 
             if (w != null) {
@@ -405,8 +396,7 @@ public class Vec3i implements IWorldLocation {
     @SideOnly(Side.CLIENT)
     private static World getClientWorld(int world) {
 
-        if (Minecraft.getMinecraft().theWorld.provider.dimensionId != world)
-            return null;
+        if (Minecraft.getMinecraft().theWorld.provider.dimensionId != world) return null;
         return Minecraft.getMinecraft().theWorld;
     }
 

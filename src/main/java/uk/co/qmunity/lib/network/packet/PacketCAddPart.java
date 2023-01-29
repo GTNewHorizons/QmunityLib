@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
+
 import uk.co.qmunity.lib.part.IPart;
 import uk.co.qmunity.lib.part.ITilePartHolder;
 import uk.co.qmunity.lib.part.PartRegistry;
@@ -39,14 +40,11 @@ public class PacketCAddPart extends PacketCPart {
         MultipartCompatibility.addPartToWorldBruteforce(part, player.worldObj, new Vec3i(x, y, z, player.worldObj));
 
         holder = part.getParent();
-        if (holder == null)
-            return;
+        if (holder == null) return;
         Map<String, IPart> map = holder.getPartMap();
 
         String oldId = null;
-        for (String id : holder.getPartMap().keySet())
-            if (holder.getPartMap().get(id) == part)
-                oldId = id;
+        for (String id : holder.getPartMap().keySet()) if (holder.getPartMap().get(id) == part) oldId = id;
 
         map.remove(oldId);
         map.put(partId, part);

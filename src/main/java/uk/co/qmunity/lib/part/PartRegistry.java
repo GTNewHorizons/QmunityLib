@@ -9,10 +9,8 @@ public class PartRegistry {
 
     public static void registerFactory(IPartFactory factory) {
 
-        if (factory == null)
-            return;
-        if (factories.contains(factory))
-            return;
+        if (factory == null) return;
+        if (factories.contains(factory)) return;
 
         factories.add(factory);
     }
@@ -21,8 +19,7 @@ public class PartRegistry {
 
         for (IPartFactory f : factories) {
             IPart p = f.createPart(type, client);
-            if (p != null)
-                return p;
+            if (p != null) return p;
         }
 
         return null;

@@ -114,12 +114,9 @@ public class ImmutableVec3d extends Vec3d {
         if (hasWorld()) {
             Block bl = this.b;
 
-            if (b == null && bl == Blocks.air)
-                return true;
-            if (b == null && checkAir && bl.getMaterial() == Material.air)
-                return true;
-            if (b == null && checkAir && bl.isAir(w, (int) x, (int) y, (int) z))
-                return true;
+            if (b == null && bl == Blocks.air) return true;
+            if (b == null && checkAir && bl.getMaterial() == Material.air) return true;
+            if (b == null && checkAir && bl.isAir(w, (int) x, (int) y, (int) z)) return true;
 
             return bl.getClass().isInstance(b);
         }

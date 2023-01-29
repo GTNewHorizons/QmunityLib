@@ -54,8 +54,15 @@ public class GuiContainerBase extends GuiContainer implements IWidgetListener {
 
     protected GuiAnimatedStat addAnimatedStat(String title, ItemStack icon, int color, boolean leftSided) {
 
-        GuiAnimatedStat stat = new GuiAnimatedStat(this, title, icon, guiLeft + (leftSided ? 0 : xSize), leftSided && lastLeftStat != null
-                || !leftSided && lastRightStat != null ? 3 : guiTop + 5, color, leftSided ? lastLeftStat : lastRightStat, leftSided);
+        GuiAnimatedStat stat = new GuiAnimatedStat(
+                this,
+                title,
+                icon,
+                guiLeft + (leftSided ? 0 : xSize),
+                leftSided && lastLeftStat != null || !leftSided && lastRightStat != null ? 3 : guiTop + 5,
+                color,
+                leftSided ? lastLeftStat : lastRightStat,
+                leftSided);
         addWidget(stat);
         if (leftSided) {
             lastLeftStat = stat;
@@ -67,8 +74,15 @@ public class GuiContainerBase extends GuiContainer implements IWidgetListener {
 
     protected GuiAnimatedStat addAnimatedStat(String title, String icon, int color, boolean leftSided) {
 
-        GuiAnimatedStat stat = new GuiAnimatedStat(this, title, icon, guiLeft + (leftSided ? 0 : xSize), leftSided && lastLeftStat != null
-                || !leftSided && lastRightStat != null ? 3 : guiTop + 5, color, leftSided ? lastLeftStat : lastRightStat, leftSided);
+        GuiAnimatedStat stat = new GuiAnimatedStat(
+                this,
+                title,
+                icon,
+                guiLeft + (leftSided ? 0 : xSize),
+                leftSided && lastLeftStat != null || !leftSided && lastRightStat != null ? 3 : guiTop + 5,
+                color,
+                leftSided ? lastLeftStat : lastRightStat,
+                leftSided);
         addWidget(stat);
         if (leftSided) {
             lastLeftStat = stat;
@@ -92,7 +106,8 @@ public class GuiContainerBase extends GuiContainer implements IWidgetListener {
         super.setWorldAndResolution(par1Minecraft, par2, par3);
     }
 
-    public static void drawVerticalProgressBar(int xOffset, int yOffset, int h, int w, float value, float max, int color) {
+    public static void drawVerticalProgressBar(int xOffset, int yOffset, int h, int w, float value, float max,
+            int color) {
 
         float perc = value / max;
         int height = (int) (h * perc);
@@ -118,7 +133,8 @@ public class GuiContainerBase extends GuiContainer implements IWidgetListener {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
-        fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94 + 2, COLOR_TEXT);
+        fontRendererObj
+                .drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94 + 2, COLOR_TEXT);
         if (inventory != null) {
             drawHorizontalAlignedString(7, 5, xSize - 14, I18n.format(inventory.getInventoryName() + ".name"), false);
         }
@@ -147,8 +163,7 @@ public class GuiContainerBase extends GuiContainer implements IWidgetListener {
         List<String> tooltip = new ArrayList<String>();
         boolean shift = QmunityLib.proxy.isSneakingInGui();
         for (IGuiWidget widget : widgets) {
-            if (widget.getBounds().contains(x, y))
-                widget.addTooltip(x, y, tooltip, shift);
+            if (widget.getBounds().contains(x, y)) widget.addTooltip(x, y, tooltip, shift);
         }
         if (!tooltip.isEmpty()) {
             List<String> localizedTooltip = new ArrayList<String>();
@@ -190,8 +205,7 @@ public class GuiContainerBase extends GuiContainer implements IWidgetListener {
     public void updateScreen() {
 
         super.updateScreen();
-        for (IGuiWidget widget : widgets)
-            widget.update();
+        for (IGuiWidget widget : widgets) widget.update();
     }
 
     public void redraw() {

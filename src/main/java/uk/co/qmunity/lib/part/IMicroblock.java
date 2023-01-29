@@ -1,7 +1,8 @@
 package uk.co.qmunity.lib.part;
 
 /**
- * Interface implemented by microblocks. It contains the methods you need to determine the shape and position of the microblock in its parent.
+ * Interface implemented by microblocks. It contains the methods you need to determine the shape and position of the
+ * microblock in its parent.
  *
  * @author amadornes
  */

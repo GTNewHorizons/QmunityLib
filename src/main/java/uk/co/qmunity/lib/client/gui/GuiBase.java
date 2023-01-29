@@ -57,7 +57,8 @@ public class GuiBase extends GuiScreen implements IWidgetListener {
         super.setWorldAndResolution(par1Minecraft, par2, par3);
     }
 
-    public static void drawVerticalProgressBar(int xOffset, int yOffset, int h, int w, float value, float max, int color) {
+    public static void drawVerticalProgressBar(int xOffset, int yOffset, int h, int w, float value, float max,
+            int color) {
 
         float perc = value / max;
         int height = (int) (h * perc);
@@ -95,22 +96,25 @@ public class GuiBase extends GuiScreen implements IWidgetListener {
 
             drawTexturedModalRect(x_, y_, 0, 0, xSize, ySize);
 
-            for (IGuiWidget widget : widgets)
-                widget.render(x_, y_, partialTick);
+            for (IGuiWidget widget : widgets) widget.render(x_, y_, partialTick);
         }
 
         // Foreground
         {
             if (title != null) {
-                drawHorizontalAlignedString(((width - xSize) / 2) + 7, ((height - ySize) / 2) + 8, xSize - 14, I18n.format(title), true);
+                drawHorizontalAlignedString(
+                        ((width - xSize) / 2) + 7,
+                        ((height - ySize) / 2) + 8,
+                        xSize - 14,
+                        I18n.format(title),
+                        true);
             }
         }
 
         List<String> tooltip = new ArrayList<String>();
         boolean shift = QmunityLib.proxy.isSneakingInGui();
         for (IGuiWidget widget : widgets) {
-            if (widget.getBounds().contains(x, y))
-                widget.addTooltip(x, y, tooltip, shift);
+            if (widget.getBounds().contains(x, y)) widget.addTooltip(x, y, tooltip, shift);
         }
         if (!tooltip.isEmpty()) {
             List<String> localizedTooltip = new ArrayList<String>();
@@ -149,9 +153,7 @@ public class GuiBase extends GuiScreen implements IWidgetListener {
 
     public IGuiWidget getWidget(int id) {
 
-        for (IGuiWidget widget : widgets)
-            if (widget.getID() == id)
-                return widget;
+        for (IGuiWidget widget : widgets) if (widget.getID() == id) return widget;
 
         return null;
     }

@@ -2,6 +2,7 @@ package uk.co.qmunity.lib.part;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+
 import uk.co.qmunity.lib.raytrace.QMovingObjectPosition;
 
 /**

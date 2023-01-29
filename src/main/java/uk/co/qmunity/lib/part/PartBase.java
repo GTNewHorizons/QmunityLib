@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+
 import uk.co.qmunity.lib.client.render.RenderHelper;
 import uk.co.qmunity.lib.helper.BlockPos;
 import uk.co.qmunity.lib.helper.ItemHelper;
@@ -80,22 +81,19 @@ public abstract class PartBase implements IPart {
     @Override
     public void writeUpdateData(DataOutput buffer, int channel) throws IOException {
 
-        if (channel == -1)
-            writeUpdateData(buffer);
+        if (channel == -1) writeUpdateData(buffer);
     }
 
     @Override
     public void readUpdateData(DataInput buffer, int channel) throws IOException {
 
-        if (channel == -1)
-            readUpdateData(buffer);
+        if (channel == -1) readUpdateData(buffer);
     }
 
     @Override
     public void sendUpdatePacket(int channel) {
 
-        if (parent != null && getWorld() != null)
-            parent.sendUpdatePacket(this, channel);
+        if (parent != null && getWorld() != null) parent.sendUpdatePacket(this, channel);
     }
 
     public void writeUpdateData(DataOutput buffer) throws IOException {
@@ -136,8 +134,7 @@ public abstract class PartBase implements IPart {
 
         List<ItemStack> drops = getDrops();
         if ((player == null || !player.capabilities.isCreativeMode) && drops != null && drops.size() > 0)
-            for (ItemStack item : drops)
-                ItemHelper.dropItem(getWorld(), new BlockPos(getX(), getY(), getZ()), item);
+            for (ItemStack item : drops) ItemHelper.dropItem(getWorld(), new BlockPos(getX(), getY(), getZ()), item);
 
         return true;
     }
@@ -156,7 +153,8 @@ public abstract class PartBase implements IPart {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean renderBreaking(Vec3i translation, RenderHelper renderer, RenderBlocks renderBlocks, int pass, QMovingObjectPosition mop) {
+    public boolean renderBreaking(Vec3i translation, RenderHelper renderer, RenderBlocks renderBlocks, int pass,
+            QMovingObjectPosition mop) {
 
         return false;
     }

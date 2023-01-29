@@ -48,8 +48,7 @@ public class FMPDataInput implements DataInput {
     public void readFully(byte[] b) throws IOException {
 
         byte[] bytes = input.readByteArray(b.length);
-        for (int i = 0; i < b.length; i++)
-            b[i] = bytes[i];
+        for (int i = 0; i < b.length; i++) b[i] = bytes[i];
     }
 
     @Override
@@ -58,8 +57,7 @@ public class FMPDataInput implements DataInput {
         skipBytes(off);
 
         byte[] bytes = input.readByteArray(len);
-        for (int i = 0; i < len; i++)
-            b[i] = bytes[i];
+        for (int i = 0; i < len; i++) b[i] = bytes[i];
     }
 
     @Override
@@ -110,10 +108,8 @@ public class FMPDataInput implements DataInput {
         int i = 0;
 
         try {
-            for (; i < n; i++)
-                input.readByte();
-        } catch (Exception ex) {
-        }
+            for (; i < n; i++) input.readByte();
+        } catch (Exception ex) {}
 
         return i;
     }

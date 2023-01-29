@@ -1,6 +1,7 @@
 package uk.co.qmunity.lib.transform;
 
 import net.minecraftforge.common.util.ForgeDirection;
+
 import uk.co.qmunity.lib.vec.Quat;
 import uk.co.qmunity.lib.vec.Vec3d;
 import uk.co.qmunity.lib.vec.Vec3dCube;
@@ -33,25 +34,25 @@ public class Rotation implements Transformation {
     public Rotation(ForgeDirection face) {
 
         switch (face) {
-        case DOWN:
-            break;
-        case UP:
-            z = 180;
-            break;
-        case WEST:
-            z = -90;
-            break;
-        case EAST:
-            z = 90;
-            break;
-        case NORTH:
-            x = 90;
-            break;
-        case SOUTH:
-            x = -90;
-            break;
-        default:
-            break;
+            case DOWN:
+                break;
+            case UP:
+                z = 180;
+                break;
+            case WEST:
+                z = -90;
+                break;
+            case EAST:
+                z = 90;
+                break;
+            case NORTH:
+                x = 90;
+                break;
+            case SOUTH:
+                x = -90;
+                break;
+            default:
+                break;
         }
 
         Quat rx = new Quat(new Vec3d(1, 0, 0), Math.toRadians(x));

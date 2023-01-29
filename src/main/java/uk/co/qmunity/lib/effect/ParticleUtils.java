@@ -6,8 +6,7 @@ public class ParticleUtils {
 
     public static void spawnParticle(World w, double x, double y, double z, Particle particle) {
 
-        if (particle.parent != null)
-            return;
+        if (particle.parent != null) return;
 
         w.spawnEntityInWorld(new EntityFXParticle(w, x, y, z, particle));
     }

@@ -34,19 +34,16 @@ public class SimplifiedLayout {
                     }
                 }
                 // Already contained, we don't care about this one :P
-                if (found)
-                    continue;
+                if (found) continue;
 
                 int rgb = img.getRGB(x, y) & 0xFFFFFF;
 
-                if (rgb == 0x1a1a1a || rgb == 0)
-                    continue;
+                if (rgb == 0x1a1a1a || rgb == 0) continue;
 
                 int x_ = x;
                 for (; x_ < img.getWidth(); x_++) {
                     int rgb_ = img.getRGB(x_, y) & 0xFFFFFF;
-                    if (rgb_ != rgb)
-                        break;
+                    if (rgb_ != rgb) break;
                     boolean problem = false;
                     for (Rectangle r : rect) {
                         if (r.contains(x_ + 0.5, y + 0.5)) {
@@ -54,12 +51,10 @@ public class SimplifiedLayout {
                             break;
                         }
                     }
-                    if (problem)
-                        break;
+                    if (problem) break;
                 }
 
-                if (x_ == x)
-                    continue;
+                if (x_ == x) continue;
 
                 int y_ = y;
                 for (; y_ < img.getHeight(); y_++) {
@@ -77,12 +72,10 @@ public class SimplifiedLayout {
                             }
                         }
                     }
-                    if (problem)
-                        break;
+                    if (problem) break;
                 }
 
-                if (y_ == y)
-                    continue;
+                if (y_ == y) continue;
 
                 rect.add(new Rectangle(x, y, x_ - x, y_ - y));
 

@@ -34,7 +34,7 @@ public class BlockPos {
 
     public BlockPos add(BlockPos pos, double x, double y, double z) {
 
-        return new BlockPos((double)pos.getX() + x, (double)pos.getY() + y, (double)pos.getZ() + z);
+        return new BlockPos((double) pos.getX() + x, (double) pos.getY() + y, (double) pos.getZ() + z);
     }
 
     public BlockPos add(int x, int y, int z) {
@@ -44,7 +44,6 @@ public class BlockPos {
         this.z += z;
         return this;
     }
-
 
     public int getX() {
 

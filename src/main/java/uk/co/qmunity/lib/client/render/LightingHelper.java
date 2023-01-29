@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import uk.co.qmunity.lib.vec.Vec3d;
 import uk.co.qmunity.lib.vec.Vec3i;
 import cpw.mods.fml.relauncher.Side;
@@ -26,13 +27,17 @@ public class LightingHelper {
     private float[] aoSamples = new float[27];
     private int[] brightnessSamples = new int[27];
 
-    private static final int[][] ssamplem = new int[][] { { 0, 1, 2, 3, 4, 5, 6, 7, 8 }, { 18, 19, 20, 21, 22, 23, 24, 25, 26 },
-            { 0, 9, 18, 1, 10, 19, 2, 11, 20 }, { 6, 15, 24, 7, 16, 25, 8, 17, 26 }, { 0, 3, 6, 9, 12, 15, 18, 21, 24 },
-            { 2, 5, 8, 11, 14, 17, 20, 23, 26 }, { 9, 10, 11, 12, 13, 14, 15, 16, 17 }, { 9, 10, 11, 12, 13, 14, 15, 16, 17 },
-            { 3, 12, 21, 4, 13, 22, 5, 14, 23 }, { 3, 12, 21, 4, 13, 22, 5, 14, 23 }, { 1, 4, 7, 10, 13, 16, 19, 22, 25 },
+    private static final int[][] ssamplem = new int[][] { { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
+            { 18, 19, 20, 21, 22, 23, 24, 25, 26 }, { 0, 9, 18, 1, 10, 19, 2, 11, 20 },
+            { 6, 15, 24, 7, 16, 25, 8, 17, 26 }, { 0, 3, 6, 9, 12, 15, 18, 21, 24 },
+            { 2, 5, 8, 11, 14, 17, 20, 23, 26 }, { 9, 10, 11, 12, 13, 14, 15, 16, 17 },
+            { 9, 10, 11, 12, 13, 14, 15, 16, 17 }, { 3, 12, 21, 4, 13, 22, 5, 14, 23 },
+            { 3, 12, 21, 4, 13, 22, 5, 14, 23 }, { 1, 4, 7, 10, 13, 16, 19, 22, 25 },
             { 1, 4, 7, 10, 13, 16, 19, 22, 25 }, { 13, 13, 13, 13, 13, 13, 13, 13, 13 } };
-    private static final int[][] qsamplem = new int[][] { { 0, 1, 3, 4 }, { 5, 1, 2, 4 }, { 6, 7, 3, 4 }, { 5, 7, 8, 4 } };
-    private static final float[] sideao = new float[] { 0.5F, 1F, 0.8F, 0.8F, 0.6F, 0.6F, 0.5F, 1F, 0.8F, 0.8F, 0.6F, 0.6F, 1F };
+    private static final int[][] qsamplem = new int[][] { { 0, 1, 3, 4 }, { 5, 1, 2, 4 }, { 6, 7, 3, 4 },
+            { 5, 7, 8, 4 } };
+    private static final float[] sideao = new float[] { 0.5F, 1F, 0.8F, 0.8F, 0.6F, 0.6F, 0.5F, 1F, 0.8F, 0.8F, 0.6F,
+            0.6F, 1F };
 
     private IBlockAccess access;
     private Vec3i pos;
@@ -61,11 +66,12 @@ public class LightingHelper {
 
         int[] b = getBrightness(side);
         int br = interpolateBrightness(b[0], b[1], b[2], b[3]);
-        Vec3d v = new Vec3d(0, 0, 0).add(ForgeDirection.getOrientation(side)).mul(vertex.getX(), vertex.getY(), vertex.getZ());
+        Vec3d v = new Vec3d(0, 0, 0).add(ForgeDirection.getOrientation(side))
+                .mul(vertex.getX(), vertex.getY(), vertex.getZ());
         double d = v.getX() + v.getY() + v.getZ();
         if (Math.abs(d) < 0.9) {
-            int bbr = access.getBlock(pos.getX(), pos.getY(), pos.getZ()).getMixedBrightnessForBlock(access, pos.getX(), pos.getY(),
-                    pos.getZ());
+            int bbr = access.getBlock(pos.getX(), pos.getY(), pos.getZ())
+                    .getMixedBrightnessForBlock(access, pos.getX(), pos.getY(), pos.getZ());
             br = interpolateBrightness(br, br, bbr, bbr);
         }
         return br;
@@ -77,7 +83,8 @@ public class LightingHelper {
 
         float[] a = getAo(side);
         float ao = interpolateAO(a[0], a[1], a[2], a[3]);
-        Vec3d v = new Vec3d(0, 0, 0).add(ForgeDirection.getOrientation(side)).mul(vertex.getX(), vertex.getY(), vertex.getZ());
+        Vec3d v = new Vec3d(0, 0, 0).add(ForgeDirection.getOrientation(side))
+                .mul(vertex.getX(), vertex.getY(), vertex.getZ());
         double d = v.getX() + v.getY() + v.getZ();
         if (Math.abs(d) < 0.9) {
             float bao = sideao[side];
@@ -92,20 +99,14 @@ public class LightingHelper {
         double x = normal.getX(), y = normal.getY(), z = normal.getZ();
         int br = 0;
 
-        if (x < 0)
-            br += getProportion(getVertexBrightness(vertex, ForgeDirection.WEST.ordinal()), -x);
-        if (x > 0)
-            br += getProportion(getVertexBrightness(vertex, ForgeDirection.EAST.ordinal()), x);
+        if (x < 0) br += getProportion(getVertexBrightness(vertex, ForgeDirection.WEST.ordinal()), -x);
+        if (x > 0) br += getProportion(getVertexBrightness(vertex, ForgeDirection.EAST.ordinal()), x);
 
-        if (y < 0)
-            br += getProportion(getVertexBrightness(vertex, ForgeDirection.DOWN.ordinal()), -y);
-        if (y > 0)
-            br += getProportion(getVertexBrightness(vertex, ForgeDirection.UP.ordinal()), y);
+        if (y < 0) br += getProportion(getVertexBrightness(vertex, ForgeDirection.DOWN.ordinal()), -y);
+        if (y > 0) br += getProportion(getVertexBrightness(vertex, ForgeDirection.UP.ordinal()), y);
 
-        if (z < 0)
-            br += getProportion(getVertexBrightness(vertex, ForgeDirection.NORTH.ordinal()), -z);
-        if (z > 0)
-            br += getProportion(getVertexBrightness(vertex, ForgeDirection.SOUTH.ordinal()), z);
+        if (z < 0) br += getProportion(getVertexBrightness(vertex, ForgeDirection.NORTH.ordinal()), -z);
+        if (z > 0) br += getProportion(getVertexBrightness(vertex, ForgeDirection.SOUTH.ordinal()), z);
 
         return br & 0xF000F0;
     }
@@ -116,20 +117,14 @@ public class LightingHelper {
         double x = normal.getX(), y = normal.getY(), z = normal.getZ();
         float ao = 0;
 
-        if (x < 0)
-            ao += getProportion(getVertexAo(vertex, ForgeDirection.WEST.ordinal()), -x);
-        if (x > 0)
-            ao += getProportion(getVertexAo(vertex, ForgeDirection.EAST.ordinal()), x);
+        if (x < 0) ao += getProportion(getVertexAo(vertex, ForgeDirection.WEST.ordinal()), -x);
+        if (x > 0) ao += getProportion(getVertexAo(vertex, ForgeDirection.EAST.ordinal()), x);
 
-        if (y < 0)
-            ao += getProportion(getVertexAo(vertex, ForgeDirection.DOWN.ordinal()), -y);
-        if (y > 0)
-            ao += getProportion(getVertexAo(vertex, ForgeDirection.UP.ordinal()), y);
+        if (y < 0) ao += getProportion(getVertexAo(vertex, ForgeDirection.DOWN.ordinal()), -y);
+        if (y > 0) ao += getProportion(getVertexAo(vertex, ForgeDirection.UP.ordinal()), y);
 
-        if (z < 0)
-            ao += getProportion(getVertexAo(vertex, ForgeDirection.NORTH.ordinal()), -z);
-        if (z > 0)
-            ao += getProportion(getVertexAo(vertex, ForgeDirection.SOUTH.ordinal()), z);
+        if (z < 0) ao += getProportion(getVertexAo(vertex, ForgeDirection.NORTH.ordinal()), -z);
+        if (z > 0) ao += getProportion(getVertexAo(vertex, ForgeDirection.SOUTH.ordinal()), z);
 
         return Math.max(Math.min(ao, 1), 0);
     }
@@ -141,20 +136,14 @@ public class LightingHelper {
         normal = normal.normalize();
         double x = normal.getX(), y = normal.getY(), z = normal.getZ();
 
-        if (x < 0)
-            ao += sideao[ForgeDirection.WEST.ordinal()] * -x;
-        if (x > 0)
-            ao += sideao[ForgeDirection.EAST.ordinal()] * -x;
+        if (x < 0) ao += sideao[ForgeDirection.WEST.ordinal()] * -x;
+        if (x > 0) ao += sideao[ForgeDirection.EAST.ordinal()] * -x;
 
-        if (y < 0)
-            ao += sideao[ForgeDirection.DOWN.ordinal()] * -y;
-        if (y > 0)
-            ao += sideao[ForgeDirection.UP.ordinal()] * y;
+        if (y < 0) ao += sideao[ForgeDirection.DOWN.ordinal()] * -y;
+        if (y > 0) ao += sideao[ForgeDirection.UP.ordinal()] * y;
 
-        if (z < 0)
-            ao += sideao[ForgeDirection.NORTH.ordinal()] * -z;
-        if (z > 0)
-            ao += sideao[ForgeDirection.SOUTH.ordinal()] * z;
+        if (z < 0) ao += sideao[ForgeDirection.NORTH.ordinal()] * -z;
+        if (z > 0) ao += sideao[ForgeDirection.SOUTH.ordinal()] * z;
 
         return getProportion(brightness, ao);
     }
@@ -178,10 +167,14 @@ public class LightingHelper {
             int[] ssample = ssamplem[side];
             for (int q = 0; q < 4; q++) {
                 int[] qsample = qsamplem[q];
-                if (Minecraft.isAmbientOcclusionEnabled())
-                    interpolateSides(side, q, ssample[qsample[0]], ssample[qsample[1]], ssample[qsample[2]], ssample[qsample[3]]);
-                else
-                    interpolateSides(side, q, ssample[4], ssample[4], ssample[4], ssample[4]);
+                if (Minecraft.isAmbientOcclusionEnabled()) interpolateSides(
+                        side,
+                        q,
+                        ssample[qsample[0]],
+                        ssample[qsample[1]],
+                        ssample[qsample[2]],
+                        ssample[qsample[3]]);
+                else interpolateSides(side, q, ssample[4], ssample[4], ssample[4], ssample[4]);
             }
             computedSides |= 1 << side;
         }
@@ -194,7 +187,11 @@ public class LightingHelper {
         sample(c);
         sample(d);
         ao[s][q] = interpolateAO(aoSamples[a], aoSamples[b], aoSamples[c], aoSamples[d]) * sideao[s];// Changed!
-        brightness[s][q] = interpolateBrightness(brightnessSamples[a], brightnessSamples[b], brightnessSamples[c], brightnessSamples[d]);
+        brightness[s][q] = interpolateBrightness(
+                brightnessSamples[a],
+                brightnessSamples[b],
+                brightnessSamples[c],
+                brightnessSamples[d]);
     }
 
     private static float interpolateAO(float a, float b, float c, float d) {
@@ -204,12 +201,9 @@ public class LightingHelper {
 
     private static int interpolateBrightness(int a, int b, int c, int d) {
 
-        if (a == 0)
-            a = d;
-        if (b == 0)
-            b = d;
-        if (c == 0)
-            c = d;
+        if (a == 0) a = d;
+        if (b == 0) b = d;
+        if (c == 0) c = d;
         return (a + b + c + d) >> 2 & 0xFF00FF;
     }
 

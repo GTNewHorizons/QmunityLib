@@ -14,13 +14,17 @@ public class ItemHelper {
 
     public static void dropItem(World world, BlockPos pos, ItemStack itemStack) {
 
-        if (world.isRemote)
-            return;
+        if (world.isRemote) return;
         float dX = world.rand.nextFloat() * 0.8F + 0.1F;
         float dY = world.rand.nextFloat() * 0.8F + 0.1F;
         float dZ = world.rand.nextFloat() * 0.8F + 0.1F;
 
-        EntityItem entityItem = new EntityItem(world, pos.getX() + dX, pos.getY() + dY, pos.getZ() + dZ, itemStack.copy());
+        EntityItem entityItem = new EntityItem(
+                world,
+                pos.getX() + dX,
+                pos.getY() + dY,
+                pos.getZ() + dZ,
+                itemStack.copy());
 
         float factor = 0.05F;
         entityItem.motionX = world.rand.nextGaussian() * factor;

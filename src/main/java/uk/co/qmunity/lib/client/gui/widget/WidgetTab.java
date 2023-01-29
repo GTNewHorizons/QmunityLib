@@ -36,8 +36,7 @@ public class WidgetTab extends BaseWidget {
     @Override
     public void render(int mouseX, int mouseY, float partialTick) {
 
-        if (textures.length > 0)
-            Minecraft.getMinecraft().getTextureManager().bindTexture(textures[0]);
+        if (textures.length > 0) Minecraft.getMinecraft().getTextureManager().bindTexture(textures[0]);
 
         for (int i = 0; i < tabAmount; i++) {
             if (i == value) {
@@ -49,7 +48,14 @@ public class WidgetTab extends BaseWidget {
                     GL11.glColor4d(0.2, 0.2, 0.2, 1);
                 }
             }
-            Gui.func_146110_a(x, y + singleTabHeight * i, getTextureU(), getTextureV() + singleTabHeight * i, width, singleTabHeight, 256,
+            Gui.func_146110_a(
+                    x,
+                    y + singleTabHeight * i,
+                    getTextureU(),
+                    getTextureV() + singleTabHeight * i,
+                    width,
+                    singleTabHeight,
+                    256,
                     256);
         }
     }

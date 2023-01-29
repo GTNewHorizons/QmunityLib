@@ -9,6 +9,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import uk.co.qmunity.lib.part.IMicroblock;
 import uk.co.qmunity.lib.part.IPart;
 import uk.co.qmunity.lib.part.IPartPlacement;
@@ -37,8 +38,7 @@ public class FMPCompat implements IMultipartCompat {
 
         BlockCoord b = new BlockCoord(location.getX(), location.getY(), location.getZ());
         TileMultipart tmp = TileMultipart.getOrConvertTile(world, b);
-        if (tmp == null)
-            return false;
+        if (tmp == null) return false;
         FMPPart p = (FMPPart) getPartHolder(world, location);
         boolean isNew = false;
         if (p == null) {
@@ -47,12 +47,10 @@ public class FMPCompat implements IMultipartCompat {
             isNew = true;
         }
 
-        if (!p.canAddPart(part))
-            return false;
+        if (!p.canAddPart(part)) return false;
 
         if (!simulated) {
-            if (!world.isRemote)
-                p.addPart(part);
+            if (!world.isRemote) p.addPart(part);
         } else {
             part.setParent(p);
             TileMultipart te = TileMultipart.getOrConvertTile(world, b);
@@ -66,10 +64,8 @@ public class FMPCompat implements IMultipartCompat {
         }
 
         if (isNew) {
-            if (!tmp.canAddPart(p))
-                return false;
-            if (!simulated && !world.isRemote)
-                TileMultipart.addPart(world, b, p);
+            if (!tmp.canAddPart(p)) return false;
+            if (!simulated && !world.isRemote) TileMultipart.addPart(world, b, p);
         }
 
         return true;
@@ -80,8 +76,7 @@ public class FMPCompat implements IMultipartCompat {
 
         BlockCoord b = new BlockCoord(location.getX(), location.getY(), location.getZ());
         TileMultipart tmp = TileMultipart.getOrConvertTile(world, b);
-        if (tmp == null)
-            return false;
+        if (tmp == null) return false;
 
         FMPPart p = (FMPPart) getPartHolder(world, location);
         boolean isNew = false;
@@ -92,73 +87,64 @@ public class FMPCompat implements IMultipartCompat {
 
         p.addPart(part);
 
-        if (isNew && !world.isRemote)
-            TileMultipart.addPart(world, b, p);
+        if (isNew && !world.isRemote) TileMultipart.addPart(world, b, p);
 
         return true;
     }
 
     @Override
-    public boolean placePartInWorld(IPart part, World world, Vec3i location, ForgeDirection clickedFace, EntityPlayer player, ItemStack item,
-            int pass, boolean simulated) {
+    public boolean placePartInWorld(IPart part, World world, Vec3i location, ForgeDirection clickedFace,
+            EntityPlayer player, ItemStack item, int pass, boolean simulated) {
 
-        if (pass == 0 && player.isSneaking())
-            return false;
+        if (pass == 0 && player.isSneaking()) return false;
 
-        MovingObjectPosition mop = world.getBlock(location.getX(), location.getY(), location.getZ()).collisionRayTrace(world, location.getX(),
-                location.getY(), location.getZ(), RayTracer.getStartVector(player).toVec3(), RayTracer.getEndVector(player).toVec3());
-        if (mop == null)
-            return false;
+        MovingObjectPosition mop = world.getBlock(location.getX(), location.getY(), location.getZ()).collisionRayTrace(
+                world,
+                location.getX(),
+                location.getY(),
+                location.getZ(),
+                RayTracer.getStartVector(player).toVec3(),
+                RayTracer.getEndVector(player).toVec3());
+        if (mop == null) return false;
 
         boolean solidFace = false;
         double x = mop.hitVec.xCoord - mop.blockX;
         double y = mop.hitVec.yCoord - mop.blockY;
         double z = mop.hitVec.zCoord - mop.blockZ;
-        if (x < 0)
-            x += 1;
-        if (y < 0)
-            y += 1;
-        if (z < 0)
-            z += 1;
+        if (x < 0) x += 1;
+        if (y < 0) y += 1;
+        if (z < 0) z += 1;
 
         switch (clickedFace) {
-        case DOWN:
-            if (y <= 0)
-                solidFace = true;
-            break;
-        case UP:
-            if (y >= 1)
-                solidFace = true;
-            break;
-        case WEST:
-            if (x <= 0)
-                solidFace = true;
-            break;
-        case EAST:
-            if (x >= 1)
-                solidFace = true;
-            break;
-        case NORTH:
-            if (z <= 0)
-                solidFace = true;
-            break;
-        case SOUTH:
-            if (z >= 1)
-                solidFace = true;
-            break;
-        default:
-            break;
+            case DOWN:
+                if (y <= 0) solidFace = true;
+                break;
+            case UP:
+                if (y >= 1) solidFace = true;
+                break;
+            case WEST:
+                if (x <= 0) solidFace = true;
+                break;
+            case EAST:
+                if (x >= 1) solidFace = true;
+                break;
+            case NORTH:
+                if (z <= 0) solidFace = true;
+                break;
+            case SOUTH:
+                if (z >= 1) solidFace = true;
+                break;
+            default:
+                break;
         }
 
-        if (pass == 1 || solidFace)
-            location.add(clickedFace);
+        if (pass == 1 || solidFace) location.add(clickedFace);
 
         if (canBeMultipart(world, location)) {
-            IPartPlacement placement = MultipartCompatibility.getPlacementForPart(part, world, location, clickedFace, mop, player);
-            if (placement == null)
-                return false;
-            if (!simulated && !placement.placePart(part, world, location, this, true))
-                return false;
+            IPartPlacement placement = MultipartCompatibility
+                    .getPlacementForPart(part, world, location, clickedFace, mop, player);
+            if (placement == null) return false;
+            if (!simulated && !placement.placePart(part, world, location, this, true)) return false;
             return placement.placePart(part, world, location, this, simulated);
         }
 
@@ -182,35 +168,34 @@ public class FMPCompat implements IMultipartCompat {
 
         return world.isAirBlock(location.getX(), location.getY(), location.getZ())
                 || world.getBlock(location.getX(), location.getY(), location.getZ()).getMaterial().isReplaceable()
-                || TileMultipart.getOrConvertTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ())) != null;
+                || TileMultipart
+                        .getOrConvertTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ()))
+                        != null;
     }
 
     @Override
     public int getStrongRedstoneOuput(World world, Vec3i location, ForgeDirection side, ForgeDirection face) {
 
-        TileMultipart tmp = TileMultipart.getOrConvertTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ()));
-        if (tmp == null)
-            return 0;
+        TileMultipart tmp = TileMultipart
+                .getOrConvertTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ()));
+        if (tmp == null) return 0;
 
         if (face == ForgeDirection.UNKNOWN) {
-            if (side != ForgeDirection.UNKNOWN)
-                return tmp.strongPowerLevel(side.ordinal());
+            if (side != ForgeDirection.UNKNOWN) return tmp.strongPowerLevel(side.ordinal());
             return 0;
         }
 
         TMultiPart slotPart = tmp.partMap(side.ordinal());
         if (slotPart != null) {
-            if (slotPart instanceof IRedstonePart)
-                return ((IRedstonePart) slotPart).strongPowerLevel(side.ordinal());
+            if (slotPart instanceof IRedstonePart) return ((IRedstonePart) slotPart).strongPowerLevel(side.ordinal());
             return 0;
         }
 
         int strong = 0;
 
-        for (TMultiPart p : tmp.jPartList())
-            if (p instanceof IRedstonePart && p instanceof IFaceRedstonePart)
-                if (((IFaceRedstonePart) p).getFace() == face.ordinal())
-                    strong = Math.max(strong, ((IRedstonePart) p).strongPowerLevel(side.ordinal()));
+        for (TMultiPart p : tmp.jPartList()) if (p instanceof IRedstonePart && p instanceof IFaceRedstonePart)
+            if (((IFaceRedstonePart) p).getFace() == face.ordinal())
+                strong = Math.max(strong, ((IRedstonePart) p).strongPowerLevel(side.ordinal()));
 
         return strong;
     }
@@ -218,29 +203,26 @@ public class FMPCompat implements IMultipartCompat {
     @Override
     public int getWeakRedstoneOuput(World world, Vec3i location, ForgeDirection side, ForgeDirection face) {
 
-        TileMultipart tmp = TileMultipart.getOrConvertTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ()));
-        if (tmp == null)
-            return 0;
+        TileMultipart tmp = TileMultipart
+                .getOrConvertTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ()));
+        if (tmp == null) return 0;
 
         if (face == ForgeDirection.UNKNOWN) {
-            if (side != ForgeDirection.UNKNOWN)
-                return tmp.weakPowerLevel(side.ordinal());
+            if (side != ForgeDirection.UNKNOWN) return tmp.weakPowerLevel(side.ordinal());
             return 0;
         }
 
         TMultiPart slotPart = tmp.partMap(side.ordinal());
         if (slotPart != null) {
-            if (slotPart instanceof IRedstonePart)
-                return ((IRedstonePart) slotPart).weakPowerLevel(side.ordinal());
+            if (slotPart instanceof IRedstonePart) return ((IRedstonePart) slotPart).weakPowerLevel(side.ordinal());
             return 0;
         }
 
         int weak = 0;
 
-        for (TMultiPart p : tmp.jPartList())
-            if (p instanceof IRedstonePart && p instanceof IFaceRedstonePart)
-                if (((IFaceRedstonePart) p).getFace() == face.ordinal())
-                    weak = Math.max(weak, ((IRedstonePart) p).weakPowerLevel(side.ordinal()));
+        for (TMultiPart p : tmp.jPartList()) if (p instanceof IRedstonePart && p instanceof IFaceRedstonePart)
+            if (((IFaceRedstonePart) p).getFace() == face.ordinal())
+                weak = Math.max(weak, ((IRedstonePart) p).weakPowerLevel(side.ordinal()));
 
         return weak;
     }
@@ -248,26 +230,23 @@ public class FMPCompat implements IMultipartCompat {
     @Override
     public boolean canConnectRedstone(World world, Vec3i location, ForgeDirection side, ForgeDirection face) {
 
-        if (!isMultipart(world, location))
-            return false;
+        if (!isMultipart(world, location)) return false;
 
         int s = Direction.getMovementDirection(side.offsetX, side.offsetZ);
 
-        TileMultipart tmp = TileMultipart.getOrConvertTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ()));
+        TileMultipart tmp = TileMultipart
+                .getOrConvertTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ()));
 
-        if (face == ForgeDirection.UNKNOWN)
-            return tmp.canConnectRedstone(s);
+        if (face == ForgeDirection.UNKNOWN) return tmp.canConnectRedstone(s);
 
         TMultiPart slotPart = tmp.partMap(side.ordinal());
         if (slotPart != null) {
-            if (slotPart instanceof IRedstonePart)
-                return ((IRedstonePart) slotPart).canConnectRedstone(side.ordinal());
+            if (slotPart instanceof IRedstonePart) return ((IRedstonePart) slotPart).canConnectRedstone(side.ordinal());
             return false;
         }
 
         for (TMultiPart p : tmp.jPartList())
-            if (p instanceof IRedstonePart && ((IRedstonePart) p).canConnectRedstone(s))
-                return true;
+            if (p instanceof IRedstonePart && ((IRedstonePart) p).canConnectRedstone(s)) return true;
 
         return false;
     }
@@ -275,13 +254,11 @@ public class FMPCompat implements IMultipartCompat {
     @Override
     public ITilePartHolder getPartHolder(World world, Vec3i location) {
 
-        TileMultipart tmp = TileMultipart.getOrConvertTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ()));
-        if (tmp == null)
-            return null;
+        TileMultipart tmp = TileMultipart
+                .getOrConvertTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ()));
+        if (tmp == null) return null;
 
-        for (TMultiPart p : tmp.jPartList())
-            if (p instanceof FMPPart)
-                return (ITilePartHolder) p;
+        for (TMultiPart p : tmp.jPartList()) if (p instanceof FMPPart) return (ITilePartHolder) p;
 
         return null;
     }
@@ -289,9 +266,9 @@ public class FMPCompat implements IMultipartCompat {
     @Override
     public boolean checkOcclusion(World world, Vec3i location, Vec3dCube cube) {
 
-        TileMultipart tmp = TileMultipart.getOrConvertTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ()));
-        if (tmp == null)
-            return false;
+        TileMultipart tmp = TileMultipart
+                .getOrConvertTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ()));
+        if (tmp == null) return false;
 
         return tmp.occlusionTest(tmp.partList(), new NormallyOccludedPart(new Cuboid6(cube.toAABB())));
     }
@@ -317,14 +294,13 @@ public class FMPCompat implements IMultipartCompat {
 
         List<IMicroblock> microblocks = new ArrayList<IMicroblock>();
 
-        TileMultipart tmp = TileMultipart.getTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ()));
+        TileMultipart tmp = TileMultipart
+                .getTile(world, new BlockCoord(location.getX(), location.getY(), location.getZ()));
 
-        if (tmp == null)
-            return microblocks;
+        if (tmp == null) return microblocks;
 
         for (TMultiPart p : tmp.jPartList())
-            if (p instanceof Microblock)
-                microblocks.add(new FMPMicroblock((Microblock) p));
+            if (p instanceof Microblock) microblocks.add(new FMPMicroblock((Microblock) p));
 
         return microblocks;
     }

@@ -190,8 +190,7 @@ public class RenderUtils {
 
         GL11.glColor4f(1, 1, 1, 1);
 
-        if (isTextureEnabled)
-            GL11.glEnable(GL11.GL_TEXTURE_2D);
+        if (isTextureEnabled) GL11.glEnable(GL11.GL_TEXTURE_2D);
 
         GL11.glPopMatrix();
     }

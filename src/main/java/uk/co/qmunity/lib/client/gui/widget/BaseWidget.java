@@ -67,8 +67,7 @@ public class BaseWidget implements IGuiWidget {
         } else {
             GL11.glColor4d(0.2, 0.2, 0.2, 1);
         }
-        if (textures.length > 0)
-            Minecraft.getMinecraft().getTextureManager().bindTexture(textures[textureIndex]);
+        if (textures.length > 0) Minecraft.getMinecraft().getTextureManager().bindTexture(textures[textureIndex]);
         Gui.func_146110_a(x, y, getTextureU(), getTextureV(), width, height, getTextureWidth(), getTextureHeight());
     }
 

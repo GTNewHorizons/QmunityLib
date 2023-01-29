@@ -48,29 +48,22 @@ public class RenderPartPlacement {
         EntityPlayer player = mc.thePlayer;
         ItemStack item = player.getCurrentEquippedItem();
 
-        if (item == null)
-            return;
-        if (!(item.getItem() instanceof ItemMultipart))
-            return;
-        if (mc.gameSettings.hideGUI && mc.currentScreen == null)
-            return;
+        if (item == null) return;
+        if (!(item.getItem() instanceof ItemMultipart)) return;
+        if (mc.gameSettings.hideGUI && mc.currentScreen == null) return;
 
         MovingObjectPosition mop = player.rayTrace(player.capabilities.isCreativeMode ? 5 : 4, 0);
-        if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK)
-            return;
+        if (mop == null || mop.typeOfHit != MovingObjectType.BLOCK) return;
 
         IPart part = ((ItemMultipart) item.getItem()).createPart(item, player, world, mop);
 
-        if (part == null)
-            return;
-        if (!(part instanceof IPartRenderPlacement))
-            return;
+        if (part == null) return;
+        if (!(part instanceof IPartRenderPlacement)) return;
 
         ForgeDirection faceHit = ForgeDirection.getOrientation(mop.sideHit);
         Vec3i location = new Vec3i(mop.blockX, mop.blockY, mop.blockZ);
 
-        if (!MultipartCompatibility.placePartInWorld(part, world, location, faceHit, player, item, true))
-            return;
+        if (!MultipartCompatibility.placePartInWorld(part, world, location, faceHit, player, item, true)) return;
 
         if (fb == null || width != mc.displayWidth || height != mc.displayHeight) {
             width = mc.displayWidth;
@@ -112,22 +105,24 @@ public class RenderPartPlacement {
                     RenderHelper.instance.setRenderCoords(world, part.getX(), part.getY(), part.getZ());
                     RenderBlocks.getInstance().blockAccess = world;
 
-                    if (part.shouldRenderOnPass(0))
-                        part.renderStatic(new Vec3i(part.getX(), part.getY(), part.getZ()), RenderHelper.instance,
-                                RenderBlocks.getInstance(), 0);
-                    if (part.shouldRenderOnPass(1))
-                        part.renderStatic(new Vec3i(part.getX(), part.getY(), part.getZ()), RenderHelper.instance,
-                                RenderBlocks.getInstance(), 1);
+                    if (part.shouldRenderOnPass(0)) part.renderStatic(
+                            new Vec3i(part.getX(), part.getY(), part.getZ()),
+                            RenderHelper.instance,
+                            RenderBlocks.getInstance(),
+                            0);
+                    if (part.shouldRenderOnPass(1)) part.renderStatic(
+                            new Vec3i(part.getX(), part.getY(), part.getZ()),
+                            RenderHelper.instance,
+                            RenderBlocks.getInstance(),
+                            1);
 
                     RenderBlocks.getInstance().blockAccess = null;
                     RenderHelper.instance.reset();
                     Tessellator.instance.draw();
                     Tessellator.instance.addTranslation(part.getX(), part.getY(), part.getZ());
 
-                    if (part.shouldRenderOnPass(0))
-                        part.renderDynamic(new Vec3d(0, 0, 0), event.partialTicks, 0);
-                    if (part.shouldRenderOnPass(1))
-                        part.renderDynamic(new Vec3d(0, 0, 0), event.partialTicks, 1);
+                    if (part.shouldRenderOnPass(0)) part.renderDynamic(new Vec3d(0, 0, 0), event.partialTicks, 0);
+                    if (part.shouldRenderOnPass(1)) part.renderDynamic(new Vec3d(0, 0, 0), event.partialTicks, 1);
                 }
                 GL11.glPopMatrix();
 
@@ -146,7 +141,13 @@ public class RenderPartPlacement {
                 GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
                 GL11.glMatrixMode(GL11.GL_PROJECTION);
                 GL11.glLoadIdentity();
-                GL11.glOrtho(0, scaledresolution.getScaledWidth_double(), scaledresolution.getScaledHeight_double(), 0, 0.1, 10000D);
+                GL11.glOrtho(
+                        0,
+                        scaledresolution.getScaledWidth_double(),
+                        scaledresolution.getScaledHeight_double(),
+                        0,
+                        0.1,
+                        10000D);
                 GL11.glMatrixMode(GL11.GL_MODELVIEW);
                 GL11.glLoadIdentity();
                 GL11.glTranslatef(0.0F, 0.0F, -2000.0F);

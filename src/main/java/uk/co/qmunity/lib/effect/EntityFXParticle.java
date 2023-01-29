@@ -36,8 +36,7 @@ public class EntityFXParticle extends Entity {
 
         super.onUpdate();
 
-        if (particle.getAge() >= particle.getMaxAge())
-            setDead();
+        if (particle.getAge() >= particle.getMaxAge()) setDead();
 
         particle.tick();
 

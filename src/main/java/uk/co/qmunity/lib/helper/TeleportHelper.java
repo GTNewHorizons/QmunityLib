@@ -1,11 +1,10 @@
 package uk.co.qmunity.lib.helper;
 
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChunkCoordinates;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.MinecraftServer;
 
 /**
  * Created by Quetzi on 26/02/15.
@@ -31,7 +30,7 @@ public class TeleportHelper {
 
             private String player;
             private String type;
-            private int    dim;
+            private int dim;
             private BlockPos pos;
 
             public TeleportEntry(String player, int dim, BlockPos pos) {

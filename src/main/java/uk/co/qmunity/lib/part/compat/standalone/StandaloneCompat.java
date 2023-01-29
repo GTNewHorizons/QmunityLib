@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import uk.co.qmunity.lib.block.BlockMultipart;
 import uk.co.qmunity.lib.init.QLBlocks;
 import uk.co.qmunity.lib.part.IMicroblock;
@@ -41,8 +42,7 @@ public class StandaloneCompat implements IMultipartCompat {
         te.zCoord = location.getZ();
         te.setWorldObj(world);
 
-        if (!te.canAddPart(part))
-            return false;
+        if (!te.canAddPart(part)) return false;
 
         if (!simulated) {
             if (!world.isRemote) {
@@ -85,66 +85,58 @@ public class StandaloneCompat implements IMultipartCompat {
     }
 
     @Override
-    public boolean placePartInWorld(IPart part, World world, Vec3i location, ForgeDirection clickedFace, EntityPlayer player, ItemStack item,
-            int pass, boolean simulated) {
+    public boolean placePartInWorld(IPart part, World world, Vec3i location, ForgeDirection clickedFace,
+            EntityPlayer player, ItemStack item, int pass, boolean simulated) {
 
-        if (pass == 0 && player.isSneaking())
-            return false;
+        if (pass == 0 && player.isSneaking()) return false;
 
-        MovingObjectPosition mop = world.getBlock(location.getX(), location.getY(), location.getZ()).collisionRayTrace(world, location.getX(),
-                location.getY(), location.getZ(), RayTracer.getStartVector(player).toVec3(), RayTracer.getEndVector(player).toVec3());
-        if (mop == null)
-            return false;
+        MovingObjectPosition mop = world.getBlock(location.getX(), location.getY(), location.getZ()).collisionRayTrace(
+                world,
+                location.getX(),
+                location.getY(),
+                location.getZ(),
+                RayTracer.getStartVector(player).toVec3(),
+                RayTracer.getEndVector(player).toVec3());
+        if (mop == null) return false;
 
         boolean solidFace = false;
         double x = mop.hitVec.xCoord - mop.blockX;
         double y = mop.hitVec.yCoord - mop.blockY;
         double z = mop.hitVec.zCoord - mop.blockZ;
-        if (x < 0)
-            x += 1;
-        if (y < 0)
-            y += 1;
-        if (z < 0)
-            z += 1;
+        if (x < 0) x += 1;
+        if (y < 0) y += 1;
+        if (z < 0) z += 1;
 
         switch (clickedFace) {
-        case DOWN:
-            if (y <= 0)
-                solidFace = true;
-            break;
-        case UP:
-            if (y >= 1)
-                solidFace = true;
-            break;
-        case WEST:
-            if (x <= 0)
-                solidFace = true;
-            break;
-        case EAST:
-            if (x >= 1)
-                solidFace = true;
-            break;
-        case NORTH:
-            if (z <= 0)
-                solidFace = true;
-            break;
-        case SOUTH:
-            if (z >= 1)
-                solidFace = true;
-            break;
-        default:
-            break;
+            case DOWN:
+                if (y <= 0) solidFace = true;
+                break;
+            case UP:
+                if (y >= 1) solidFace = true;
+                break;
+            case WEST:
+                if (x <= 0) solidFace = true;
+                break;
+            case EAST:
+                if (x >= 1) solidFace = true;
+                break;
+            case NORTH:
+                if (z <= 0) solidFace = true;
+                break;
+            case SOUTH:
+                if (z >= 1) solidFace = true;
+                break;
+            default:
+                break;
         }
 
-        if (pass == 1 || solidFace)
-            location.add(clickedFace);
+        if (pass == 1 || solidFace) location.add(clickedFace);
 
         if (canBeMultipart(world, location)) {
-            IPartPlacement placement = MultipartCompatibility.getPlacementForPart(part, world, location, clickedFace, mop, player);
-            if (placement == null)
-                return false;
-            if (!simulated && !placement.placePart(part, world, location, this, true))
-                return false;
+            IPartPlacement placement = MultipartCompatibility
+                    .getPlacementForPart(part, world, location, clickedFace, mop, player);
+            if (placement == null) return false;
+            if (!simulated && !placement.placePart(part, world, location, this, true)) return false;
             return placement.placePart(part, world, location, this, simulated);
         }
 
@@ -166,18 +158,17 @@ public class StandaloneCompat implements IMultipartCompat {
     @Override
     public boolean canBeMultipart(World world, Vec3i location) {
 
-        return world.getBlock(location.getX(), location.getY(), location.getZ()).getMaterial().isReplaceable() || isMultipart(world, location);
+        return world.getBlock(location.getX(), location.getY(), location.getZ()).getMaterial().isReplaceable()
+                || isMultipart(world, location);
     }
 
     @Override
     public int getStrongRedstoneOuput(World world, Vec3i location, ForgeDirection side, ForgeDirection face) {
 
         TileMultipart te = BlockMultipart.get(world, location.getX(), location.getY(), location.getZ());
-        if (te == null)
-            return 0;
+        if (te == null) return 0;
 
-        if (face == ForgeDirection.UNKNOWN)
-            return te.getStrongOutput(side);
+        if (face == ForgeDirection.UNKNOWN) return te.getStrongOutput(side);
 
         return te.getStrongOutput(side, face);
     }
@@ -186,11 +177,9 @@ public class StandaloneCompat implements IMultipartCompat {
     public int getWeakRedstoneOuput(World world, Vec3i location, ForgeDirection side, ForgeDirection face) {
 
         TileMultipart te = BlockMultipart.get(world, location.getX(), location.getY(), location.getZ());
-        if (te == null)
-            return 0;
+        if (te == null) return 0;
 
-        if (face == ForgeDirection.UNKNOWN)
-            return te.getWeakOutput(side);
+        if (face == ForgeDirection.UNKNOWN) return te.getWeakOutput(side);
 
         return te.getWeakOutput(side, face);
     }
@@ -199,11 +188,9 @@ public class StandaloneCompat implements IMultipartCompat {
     public boolean canConnectRedstone(World world, Vec3i location, ForgeDirection side, ForgeDirection face) {
 
         TileMultipart te = BlockMultipart.get(world, location.getX(), location.getY(), location.getZ());
-        if (te == null)
-            return false;
+        if (te == null) return false;
 
-        if (face == ForgeDirection.UNKNOWN)
-            return te.canConnect(side);
+        if (face == ForgeDirection.UNKNOWN) return te.canConnect(side);
 
         return te.canConnect(side, face);
     }
@@ -218,8 +205,7 @@ public class StandaloneCompat implements IMultipartCompat {
     public boolean checkOcclusion(World world, Vec3i location, Vec3dCube cube) {
 
         TileMultipart te = BlockMultipart.get(world, location.getX(), location.getY(), location.getZ());
-        if (te == null)
-            return false;
+        if (te == null) return false;
 
         return !te.canAddPart(new PartNormallyOccluded(cube));
     }
@@ -243,8 +229,7 @@ public class StandaloneCompat implements IMultipartCompat {
     public List<IMicroblock> getMicroblocks(World world, Vec3i location) {
 
         TileMultipart tmp = (TileMultipart) getPartHolder(world, location);
-        if (tmp != null)
-            return tmp.getMicroblocks();
+        if (tmp != null) return tmp.getMicroblocks();
 
         return new ArrayList<IMicroblock>();
     }

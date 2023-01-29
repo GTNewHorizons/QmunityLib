@@ -1,6 +1,6 @@
 package uk.co.qmunity.lib.ref;
 
-public class Dependencies{
+public class Dependencies {
 
     public static final String QLib = "qmunitylib";
     public static final String FMP = "ForgeMultipart";

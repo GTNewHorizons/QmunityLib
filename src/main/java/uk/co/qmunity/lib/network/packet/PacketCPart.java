@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
+
 import uk.co.qmunity.lib.network.LocatedPacket;
 import uk.co.qmunity.lib.network.NetworkHandler;
 import uk.co.qmunity.lib.part.IPart;
@@ -43,12 +44,10 @@ public abstract class PacketCPart extends LocatedPacket<PacketCPart> {
     @SideOnly(Side.CLIENT)
     public final void handleClientSide(EntityPlayer player) {
 
-        if (player == null || player.worldObj == null)
-            return;
+        if (player == null || player.worldObj == null) return;
 
         holder = MultipartCompatibility.getPartHolder(player.worldObj, x, y, z);
-        if (holder != null && holder.getPartMap().containsKey(partId))
-            part = holder.getPartMap().get(partId);
+        if (holder != null && holder.getPartMap().containsKey(partId)) part = holder.getPartMap().get(partId);
 
         doHandle(player);
     }
@@ -61,8 +60,7 @@ public abstract class PacketCPart extends LocatedPacket<PacketCPart> {
     public void doHandle(EntityPlayer player) {
 
         holder = MultipartCompatibility.getPartHolder(player.worldObj, x, y, z);
-        if (holder != null)
-            part = holder.getPartMap().get(partId);
+        if (holder != null) part = holder.getPartMap().get(partId);
 
         handle(player);
     }
@@ -94,8 +92,7 @@ public abstract class PacketCPart extends LocatedPacket<PacketCPart> {
     public void read(DataInput buffer) throws IOException {
 
         super.read(buffer);
-        if (!buffer.readBoolean())
-            return;
+        if (!buffer.readBoolean()) return;
 
         partId = buffer.readUTF();
 

@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+
 import uk.co.qmunity.lib.QLModInfo;
 import uk.co.qmunity.lib.block.BlockMultipart;
 import uk.co.qmunity.lib.init.QLBlocks;
@@ -34,8 +35,7 @@ public class FMPPartFactory implements IPartFactory, IPartConverter {
     public TMultiPart convert(World world, BlockCoord loc) {
 
         TileMultipart te = BlockMultipart.get(world, loc.x, loc.y, loc.z);
-        if (te == null)
-            return null;
+        if (te == null) return null;
 
         return new FMPPart(te.getPartMap());
     }
@@ -43,8 +43,7 @@ public class FMPPartFactory implements IPartFactory, IPartConverter {
     @Override
     public TMultiPart createPart(String type, boolean client) {
 
-        if (type.equals(QLModInfo.MODID + "_multipart"))
-            return new FMPPart();
+        if (type.equals(QLModInfo.MODID + "_multipart")) return new FMPPart();
 
         return null;
     }

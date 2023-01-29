@@ -12,9 +12,7 @@ public class ShiftingBuffer<T> {
         data = new Object[buffers][size];
         this.def = def;
 
-        for (int i = 0; i < buffers; i++)
-            for (int j = 0; j < size; j++)
-                data[i][j] = def;
+        for (int i = 0; i < buffers; i++) for (int j = 0; j < size; j++) data[i][j] = def;
     }
 
     public T set(int buffer, T value) {
@@ -48,10 +46,8 @@ public class ShiftingBuffer<T> {
 
         for (int i = 0; i < data.length; i++) {
             Object[] data = this.data[i];
-            for (int j = data.length - 1; j > 0; j--)
-                data[j] = data[j - 1];
-            if (reset0)
-                data[0] = def;
+            for (int j = data.length - 1; j > 0; j--) data[j] = data[j - 1];
+            if (reset0) data[0] = def;
         }
     }
 
@@ -62,20 +58,17 @@ public class ShiftingBuffer<T> {
         if (def instanceof Boolean) {
             for (int i = 0; i < data.length; i++) {
                 Object[] d = data[i];
-                for (int j = 0; j < d.length; j++)
-                    t.setBoolean(i + "_" + j, (Boolean) d[j]);
+                for (int j = 0; j < d.length; j++) t.setBoolean(i + "_" + j, (Boolean) d[j]);
             }
         } else if (def instanceof Byte) {
             for (int i = 0; i < data.length; i++) {
                 Object[] d = data[i];
-                for (int j = 0; j < d.length; j++)
-                    t.setByte(i + "_" + j, (Byte) d[j]);
+                for (int j = 0; j < d.length; j++) t.setByte(i + "_" + j, (Byte) d[j]);
             }
         } else if (def instanceof Integer) {
             for (int i = 0; i < data.length; i++) {
                 Object[] d = data[i];
-                for (int j = 0; j < d.length; j++)
-                    t.setInteger(i + "_" + j, (Integer) d[j]);
+                for (int j = 0; j < d.length; j++) t.setInteger(i + "_" + j, (Integer) d[j]);
             }
         }
 
@@ -89,20 +82,17 @@ public class ShiftingBuffer<T> {
         if (def instanceof Boolean) {
             for (int i = 0; i < data.length; i++) {
                 Object[] d = data[i];
-                for (int j = 0; j < d.length; j++)
-                    d[j] = t.getBoolean(i + "_" + j);
+                for (int j = 0; j < d.length; j++) d[j] = t.getBoolean(i + "_" + j);
             }
         } else if (def instanceof Byte) {
             for (int i = 0; i < data.length; i++) {
                 Object[] d = data[i];
-                for (int j = 0; j < d.length; j++)
-                    d[j] = t.getByte(i + "_" + j);
+                for (int j = 0; j < d.length; j++) d[j] = t.getByte(i + "_" + j);
             }
         } else if (def instanceof Integer) {
             for (int i = 0; i < data.length; i++) {
                 Object[] d = data[i];
-                for (int j = 0; j < d.length; j++)
-                    d[j] = t.getInteger(i + "_" + j);
+                for (int j = 0; j < d.length; j++) d[j] = t.getInteger(i + "_" + j);
             }
         }
     }

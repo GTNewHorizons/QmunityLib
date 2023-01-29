@@ -1,9 +1,10 @@
 package uk.co.qmunity.lib.raytrace;
 
+import net.minecraft.util.MovingObjectPosition;
+
 import uk.co.qmunity.lib.part.IPart;
 import uk.co.qmunity.lib.vec.Vec3d;
 import uk.co.qmunity.lib.vec.Vec3dCube;
-import net.minecraft.util.MovingObjectPosition;
 
 public class QMovingObjectPosition extends MovingObjectPosition {
 

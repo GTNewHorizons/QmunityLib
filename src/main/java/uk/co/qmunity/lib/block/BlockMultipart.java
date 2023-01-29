@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import uk.co.qmunity.lib.QmunityLib;
 import uk.co.qmunity.lib.client.renderer.RenderMultipart;
 import uk.co.qmunity.lib.part.IPart;
@@ -105,10 +106,8 @@ public class BlockMultipart extends BlockContainer {
     public static TileMultipart get(IBlockAccess world, int x, int y, int z) {
 
         TileEntity te = world.getTileEntity(x, y, z);
-        if (te == null)
-            return null;
-        if (!(te instanceof TileMultipart))
-            return null;
+        if (te == null) return null;
+        if (!(te instanceof TileMultipart)) return null;
         return (TileMultipart) te;
     }
 
@@ -121,15 +120,18 @@ public class BlockMultipart extends BlockContainer {
     private QMovingObjectPosition retrace(World world, int x, int y, int z, Vec3d start, Vec3d end) {
 
         TileMultipart te = get(world, x, y, z);
-        if (te == null)
-            return null;
+        if (te == null) return null;
 
         QMovingObjectPosition mop = te.rayTrace(start, end);
-        if (mop == null)
-            return null;
+        if (mop == null) return null;
 
         Vec3dCube c = mop.getCube().clone().expand(0.001);
-        setBlockBounds((float) c.getMinX(), (float) c.getMinY(), (float) c.getMinZ(), (float) c.getMaxX(), (float) c.getMaxY(),
+        setBlockBounds(
+                (float) c.getMinX(),
+                (float) c.getMinY(),
+                (float) c.getMinZ(),
+                (float) c.getMaxX(),
+                (float) c.getMaxY(),
                 (float) c.getMaxZ());
 
         return mop;
@@ -153,8 +155,7 @@ public class BlockMultipart extends BlockContainer {
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
 
         TileMultipart te = get(world, x, y, z);
-        if (te == null)
-            return 0;
+        if (te == null) return 0;
 
         return te.getLightValue();
     }
@@ -177,8 +178,7 @@ public class BlockMultipart extends BlockContainer {
 
         if (!world.isRemote) {
             TileMultipart te = get(world, x, y, z);
-            if (te == null)
-                return;
+            if (te == null) return;
             te.removePart(entity);
         }
     }
@@ -188,21 +188,18 @@ public class BlockMultipart extends BlockContainer {
     public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB bounds, List l, Entity entity) {
 
         TileMultipart te = get(world, x, y, z);
-        if (te == null)
-            return;
+        if (te == null) return;
 
         List<Vec3dCube> boxes = new ArrayList<Vec3dCube>();
         te.addCollisionBoxesToList(boxes, bounds, entity);
-        for (Vec3dCube c : boxes)
-            l.add(c.toAABB());
+        for (Vec3dCube c : boxes) l.add(c.toAABB());
     }
 
     @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
 
         TileMultipart te = get(world, x, y, z);
-        if (te == null)
-            return;
+        if (te == null) return;
 
         te.onNeighborBlockChange();
     }
@@ -211,8 +208,7 @@ public class BlockMultipart extends BlockContainer {
     public void onNeighborChange(IBlockAccess world, int x, int y, int z, int tileX, int tileY, int tileZ) {
 
         TileMultipart te = get(world, x, y, z);
-        if (te == null)
-            return;
+        if (te == null) return;
 
         te.onNeighborChange();
     }
@@ -227,8 +223,7 @@ public class BlockMultipart extends BlockContainer {
     public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
 
         TileMultipart te = get(world, x, y, z);
-        if (te == null)
-            return false;
+        if (te == null) return false;
 
         return te.isSideSolid(side);
     }
@@ -237,8 +232,7 @@ public class BlockMultipart extends BlockContainer {
     public int isProvidingStrongPower(IBlockAccess world, int x, int y, int z, int side) {
 
         TileMultipart te = get(world, x, y, z);
-        if (te == null)
-            return 0;
+        if (te == null) return 0;
 
         return te.getStrongOutput(ForgeDirection.getOrientation(side).getOpposite());
     }
@@ -247,8 +241,7 @@ public class BlockMultipart extends BlockContainer {
     public int isProvidingWeakPower(IBlockAccess world, int x, int y, int z, int side) {
 
         TileMultipart te = get(world, x, y, z);
-        if (te == null)
-            return 0;
+        if (te == null) return 0;
 
         return te.getWeakOutput(ForgeDirection.getOrientation(side).getOpposite());
     }
@@ -257,13 +250,11 @@ public class BlockMultipart extends BlockContainer {
     public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side) {
 
         TileMultipart te = get(world, x, y, z);
-        if (te == null)
-            return false;
+        if (te == null) return false;
 
         try {
             return te.canConnect(ForgeDirection.valueOf(Direction.directions[side]).getOpposite());
-        } catch (Exception ex) {
-        }
+        } catch (Exception ex) {}
         return false;
     }
 
@@ -271,18 +262,17 @@ public class BlockMultipart extends BlockContainer {
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
 
         TileMultipart te = get(world, x, y, z);
-        if (te == null)
-            return null;
+        if (te == null) return null;
 
         return te.pickUp(QmunityLib.proxy.getPlayer());
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float x_, float y_, float z_) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float x_, float y_,
+            float z_) {
 
         TileMultipart te = get(world, x, y, z);
-        if (te == null)
-            return false;
+        if (te == null) return false;
 
         return te.onActivated(player);
     }
@@ -291,8 +281,7 @@ public class BlockMultipart extends BlockContainer {
     public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
 
         TileMultipart te = get(world, x, y, z);
-        if (te == null)
-            return;
+        if (te == null) return;
 
         te.onClicked(player);
     }
@@ -300,11 +289,15 @@ public class BlockMultipart extends BlockContainer {
     @Override
     public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z) {
 
-        QMovingObjectPosition mop = retrace(world, x, y, z, RayTracer.instance().getStartVector(player),
+        QMovingObjectPosition mop = retrace(
+                world,
+                x,
+                y,
+                z,
+                RayTracer.instance().getStartVector(player),
                 RayTracer.instance().getEndVector(player));
 
-        if (mop == null || mop.getPart() == null)
-            return 1F;
+        if (mop == null || mop.getPart() == null) return 1F;
 
         return (float) mop.getPart().getHardness(player, mop);
     }
@@ -325,8 +318,7 @@ public class BlockMultipart extends BlockContainer {
         if (te != null) {
             for (IPart p : te.getParts()) {
                 List<ItemStack> d = p.getDrops();
-                if (d != null)
-                    l.addAll(d);
+                if (d != null) l.addAll(d);
             }
         }
 
@@ -338,18 +330,21 @@ public class BlockMultipart extends BlockContainer {
     public void onDrawHighlight(DrawBlockHighlightEvent event) {
 
         try {
-            if (!(event.player.worldObj.getBlock(event.target.blockX, event.target.blockY, event.target.blockZ) instanceof BlockMultipart))
+            if (!(event.player.worldObj
+                    .getBlock(event.target.blockX, event.target.blockY, event.target.blockZ) instanceof BlockMultipart))
                 return;
 
-            QMovingObjectPosition mop = retrace(event.player.worldObj, event.target.blockX, event.target.blockY, event.target.blockZ,
-                    RayTracer.instance().getStartVector(event.player), RayTracer.instance().getEndVector(event.player));
-            if (mop == null)
-                return;
-            if (mop.getPart() == null || !(mop.getPart() instanceof IPartSelectableCustom))
-                return;
+            QMovingObjectPosition mop = retrace(
+                    event.player.worldObj,
+                    event.target.blockX,
+                    event.target.blockY,
+                    event.target.blockZ,
+                    RayTracer.instance().getStartVector(event.player),
+                    RayTracer.instance().getEndVector(event.player));
+            if (mop == null) return;
+            if (mop.getPart() == null || !(mop.getPart() instanceof IPartSelectableCustom)) return;
             if (((IPartSelectableCustom) mop.getPart()).drawHighlight(mop, event.player, event.partialTicks))
                 event.setCanceled(true);
-        } catch (Exception ex) {
-        }
+        } catch (Exception ex) {}
     }
 }
