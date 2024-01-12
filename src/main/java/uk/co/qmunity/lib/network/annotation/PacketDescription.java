@@ -6,10 +6,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
-import uk.co.qmunity.lib.network.LocatedPacket;
-import uk.co.qmunity.lib.tile.TileBase;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
+import uk.co.qmunity.lib.network.LocatedPacket;
+import uk.co.qmunity.lib.tile.TileBase;
 
 /**
  * @author MineMaarten

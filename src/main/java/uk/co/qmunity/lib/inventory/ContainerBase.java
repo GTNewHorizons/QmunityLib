@@ -6,13 +6,13 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import uk.co.qmunity.lib.network.NetworkHandler;
 import uk.co.qmunity.lib.network.annotation.GuiSynced;
 import uk.co.qmunity.lib.network.annotation.NetworkUtils;
 import uk.co.qmunity.lib.network.annotation.PacketCUpdateGui;
 import uk.co.qmunity.lib.network.annotation.SyncedField;
 import uk.co.qmunity.lib.tile.TileBase;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
 /**
  * Use this container when you want to use @GuiSynced on your tile entity fields.

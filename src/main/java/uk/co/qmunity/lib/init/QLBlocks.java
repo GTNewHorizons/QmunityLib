@@ -2,12 +2,12 @@ package uk.co.qmunity.lib.init;
 
 import net.minecraft.block.Block;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.GameRegistry.ObjectHolder;
 import uk.co.qmunity.lib.QLModInfo;
 import uk.co.qmunity.lib.block.BlockMultipart;
 import uk.co.qmunity.lib.ref.Names;
 import uk.co.qmunity.lib.tile.TileMultipart;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.GameRegistry.ObjectHolder;
 
 @ObjectHolder(QLModInfo.MODID)
 public class QLBlocks {

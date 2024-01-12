@@ -5,6 +5,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import uk.co.qmunity.lib.misc.Pair;
 import uk.co.qmunity.lib.transform.Transformation;
 import uk.co.qmunity.lib.transform.TransformationList;
@@ -14,8 +16,6 @@ import uk.co.qmunity.lib.vec.Vec2dRect;
 import uk.co.qmunity.lib.vec.Vec3d;
 import uk.co.qmunity.lib.vec.Vec3dCube;
 import uk.co.qmunity.lib.vec.Vec3i;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelper {

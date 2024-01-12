@@ -1,6 +1,6 @@
 // Add your dependencies here
 
 dependencies {
-    compile("com.github.GTNewHorizons:CodeChickenLib:1.1.5.1:dev")
-    compile("com.github.GTNewHorizons:ForgeMultipart:1.2.7:dev")
+    compile("com.github.GTNewHorizons:CodeChickenLib:1.2.1:dev")
+    compile("com.github.GTNewHorizons:ForgeMultipart:1.4.7:dev")
 }

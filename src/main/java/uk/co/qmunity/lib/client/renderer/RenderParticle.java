@@ -4,9 +4,9 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
-import uk.co.qmunity.lib.effect.EntityFXParticle;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import uk.co.qmunity.lib.effect.EntityFXParticle;
 
 @SideOnly(Side.CLIENT)
 public class RenderParticle extends Render {

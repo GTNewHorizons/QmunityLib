@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import uk.co.qmunity.lib.part.compat.fmp.FMPHelper;
-import uk.co.qmunity.lib.part.compat.standalone.StandaloneCompat;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import uk.co.qmunity.lib.part.compat.fmp.FMPHelper;
+import uk.co.qmunity.lib.part.compat.standalone.StandaloneCompat;
 
 public enum MultipartSystem {
 

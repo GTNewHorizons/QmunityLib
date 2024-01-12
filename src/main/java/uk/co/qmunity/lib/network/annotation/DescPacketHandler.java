@@ -2,7 +2,6 @@ package uk.co.qmunity.lib.network.annotation;
 
 import java.util.EnumMap;
 
-import uk.co.qmunity.lib.QmunityLib;
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
@@ -12,6 +11,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import uk.co.qmunity.lib.QmunityLib;
 
 /**
  * @author MineMaarten

@@ -7,10 +7,10 @@ import java.io.IOException;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import uk.co.qmunity.lib.helper.BlockPos;
-import uk.co.qmunity.lib.vec.IWorldLocation;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
+import uk.co.qmunity.lib.helper.BlockPos;
+import uk.co.qmunity.lib.vec.IWorldLocation;
 
 public abstract class LocatedPacket<T extends LocatedPacket<T>> extends Packet<T> {
 

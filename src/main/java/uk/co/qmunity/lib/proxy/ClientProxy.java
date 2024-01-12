@@ -6,16 +6,16 @@ import net.minecraftforge.common.MinecraftForge;
 
 import org.lwjgl.input.Keyboard;
 
-import uk.co.qmunity.lib.client.renderer.RenderMultipart;
-import uk.co.qmunity.lib.client.renderer.RenderPartPlacement;
-import uk.co.qmunity.lib.client.renderer.RenderParticle;
-import uk.co.qmunity.lib.effect.EntityFXParticle;
-import uk.co.qmunity.lib.tile.TileMultipart;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import uk.co.qmunity.lib.client.renderer.RenderMultipart;
+import uk.co.qmunity.lib.client.renderer.RenderPartPlacement;
+import uk.co.qmunity.lib.client.renderer.RenderParticle;
+import uk.co.qmunity.lib.effect.EntityFXParticle;
+import uk.co.qmunity.lib.tile.TileMultipart;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {

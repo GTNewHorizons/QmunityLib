@@ -6,8 +6,8 @@ import java.io.IOException;
 
 import net.minecraft.world.World;
 
-import uk.co.qmunity.lib.vec.IWorldLocation;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import uk.co.qmunity.lib.vec.IWorldLocation;
 
 public abstract class LocatedPacketDouble<T extends LocatedPacket<T>> extends Packet<T> {
 

@@ -3,9 +3,9 @@ package uk.co.qmunity.lib.util;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import uk.co.qmunity.lib.vec.Vec3d;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import uk.co.qmunity.lib.vec.Vec3d;
 
 public enum Dir {
 

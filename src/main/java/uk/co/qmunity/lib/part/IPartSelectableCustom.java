@@ -2,9 +2,9 @@ package uk.co.qmunity.lib.part;
 
 import net.minecraft.entity.player.EntityPlayer;
 
-import uk.co.qmunity.lib.raytrace.QMovingObjectPosition;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import uk.co.qmunity.lib.raytrace.QMovingObjectPosition;
 
 /**
  * Interface implemented by parts that want to draw a custom selection box when their raytrace succeeds.

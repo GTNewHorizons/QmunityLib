@@ -5,15 +5,15 @@ import java.util.Arrays;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
-import uk.co.qmunity.lib.QLModInfo;
-import uk.co.qmunity.lib.block.BlockMultipart;
-import uk.co.qmunity.lib.init.QLBlocks;
-import uk.co.qmunity.lib.tile.TileMultipart;
 import codechicken.lib.vec.BlockCoord;
 import codechicken.multipart.MultiPartRegistry;
 import codechicken.multipart.MultiPartRegistry.IPartConverter;
 import codechicken.multipart.MultiPartRegistry.IPartFactory;
 import codechicken.multipart.TMultiPart;
+import uk.co.qmunity.lib.QLModInfo;
+import uk.co.qmunity.lib.block.BlockMultipart;
+import uk.co.qmunity.lib.init.QLBlocks;
+import uk.co.qmunity.lib.tile.TileMultipart;
 
 public class FMPPartFactory implements IPartFactory, IPartConverter {
 

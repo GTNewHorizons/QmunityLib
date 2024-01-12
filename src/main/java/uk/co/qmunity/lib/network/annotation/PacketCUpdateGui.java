@@ -9,6 +9,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
+import cpw.mods.fml.common.network.ByteBufUtils;
+import io.netty.buffer.ByteBuf;
 import uk.co.qmunity.lib.inventory.ContainerBase;
 import uk.co.qmunity.lib.network.Packet;
 import uk.co.qmunity.lib.network.annotation.SyncedField.SyncedBoolean;
@@ -19,8 +21,6 @@ import uk.co.qmunity.lib.network.annotation.SyncedField.SyncedFluidTank;
 import uk.co.qmunity.lib.network.annotation.SyncedField.SyncedInt;
 import uk.co.qmunity.lib.network.annotation.SyncedField.SyncedItemStack;
 import uk.co.qmunity.lib.network.annotation.SyncedField.SyncedString;
-import cpw.mods.fml.common.network.ByteBufUtils;
-import io.netty.buffer.ByteBuf;
 
 /**
  * @author MineMaarten

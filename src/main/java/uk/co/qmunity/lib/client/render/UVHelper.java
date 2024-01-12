@@ -2,9 +2,9 @@ package uk.co.qmunity.lib.client.render;
 
 import net.minecraft.util.IIcon;
 
-import uk.co.qmunity.lib.vec.Vec2d;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import uk.co.qmunity.lib.vec.Vec2d;
 
 @SideOnly(Side.CLIENT)
 public class UVHelper {

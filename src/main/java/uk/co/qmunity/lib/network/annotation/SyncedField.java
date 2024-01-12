@@ -8,9 +8,9 @@ import net.minecraftforge.fluids.FluidTank;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import uk.co.qmunity.lib.util.QLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import uk.co.qmunity.lib.util.QLog;
 
 public abstract class SyncedField<T> {
 

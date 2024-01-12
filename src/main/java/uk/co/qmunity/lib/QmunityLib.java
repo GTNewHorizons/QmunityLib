@@ -1,5 +1,9 @@
 package uk.co.qmunity.lib;
 
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.*;
 import uk.co.qmunity.lib.command.CommandQLib;
 import uk.co.qmunity.lib.helper.SystemInfoHelper;
 import uk.co.qmunity.lib.init.QLBlocks;
@@ -7,10 +11,6 @@ import uk.co.qmunity.lib.network.NetworkHandler;
 import uk.co.qmunity.lib.part.compat.MultipartSystem;
 import uk.co.qmunity.lib.proxy.CommonProxy;
 import uk.co.qmunity.lib.util.QLog;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.*;
 
 @Mod(modid = QLModInfo.MODID, name = QLModInfo.NAME, version = QLModInfo.VERSION)
 public class QmunityLib {
