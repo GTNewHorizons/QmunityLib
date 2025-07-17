@@ -2,5 +2,5 @@
 
 dependencies {
     compile("com.github.GTNewHorizons:CodeChickenCore:1.4.3:dev")
-    compile("com.github.GTNewHorizons:ForgeMultipart:1.6.6:dev")
+    compile("com.github.GTNewHorizons:ForgeMultipart:1.6.7:dev")
 }
